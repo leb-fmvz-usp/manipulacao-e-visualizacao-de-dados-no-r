@@ -1,0 +1,5 @@
+rmds/figures
+misc
+.Rhistory
+*.html
+*.Rproj*
