@@ -1,0 +1,209 @@
+```{r knitsetup, echo=FALSE, results='hide', warning=FALSE, message=FALSE, cache=FALSE}
+library(knitr)
+opts_knit$set(base.dir='./')
+opts_chunk$set(prompt=TRUE, comment='', fig.path='figures/')
+options(width = 66)
+```
+
+## Estruturação de bancos de dados
+
+Um conjunto de dados pode ser estruturado de várias formas, e com frequência uma dada estrutura é mais conveniente para determinados propósitos. Nas análises estatísticas, a estrutura mais comum organiza os dados de tal forma que cada observação é uma linha e cada variável é uma coluna. Essa estrutura é conhecida como *tidy* em inglês e aqui usaremos a tradução *arrumada*. Entretanto, a coleta dos dados as vezes é mais simples usando outras estruturas e os bancos de fontes secundárias nem sempre são disponibilizados na estrutura arrumada.  
+
+O pacote `tydir` possui funções específicas para mudar a estrutura dos bancos de dados, e neste capítulo, seguindo a própria documentação do pacote, veremos como obter uma estrutura arrumada a partir de bancos nos quais:
+
+* Os nomes de colunas são valores de uma variável, não variáveis em si.
+* Mais de uma variável está contida em uma coluna só.
+
+Por outro lado, as funções do pacote `broom` arrumam a estrutura dos resultados de funções, retornados em estruturas complexas (por exemplo listas aninhadas) de difícil manipulação. Veremos a funcionalidade do `broom` no contexto dos modelos de regressão, mas antes disso exploraremos o *encadeamento* de operações com `%>%`.
+
+### Os nomes de colunas são valores de uma variável, não variáveis em si
+
+Um conjunto de dados com 20 observações e 3 variáveis (município, tipo de município: rural ou urbano, e total de vacinados) pode estar estruturado da seguinte maneira:
+
+```{r}
+set.seed(100)
+(caes_vacinados <- data.frame(municipio = letters[1:10],
+                             rural = rpois(10, 40),
+                             urbano = rpois(10, 600)))
+```
+
+Se os nomes das colunas `rural` e `urbano` são valores da variável *tipo de município*, a estrutura arrumada deve ter 20 linhas e 3 colunas.
+
+```{r, echo=FALSE}
+library(tidyr)
+set.seed(100)
+caes_vacinados <- data.frame(municipio = letters[1:10],
+                             rural = rpois(10, 40),
+                             urbano = rpois(10, 600))
+gather(caes_vacinados, tipo, vacinados, -municipio)
+```
+
+Com a função `gather` do `tydir` podemos transformar a primeira estrutura na segunda especificando o banco, o nome de duas colunas *chave* e *valor*, e as colunas que não são variáveis.
+
+```{r}
+library(tidyr)
+gather(data = caes_vacinados, key = tipo, value = vacinados, rural, urbano)
+```
+
+Pelo código anterior a coluna *chave* (`key`) recebeu o nome `tipo` e armazenou os valores `rural` e `urbano`. A coluna *valor* (`value`) recebeu o nome `vacinados` e armazenou os valores correspondentes aos valores das variáveis `municipio` e `tipo`.  
+
+No lugar de especificar as colunas que não são variáveis, outra opção consiste em especificar as que são variáveis, precedidas por um sinal negativo. 
+
+```{r}
+caes_vacinados <- gather(caes_vacinados, tipo, vacinados, -municipio)
+```
+
+Reparem que os nomes das colunas não estão contidos em aspas. No capítulo *Objetos* vimos que para selecionar colunas de um data frame tínhamos que usar um vetor com as posições das colunas ou com os nomes entre aspas. O `tydir` é mais flexível na hora de selecionar colunas. Vejamos alguns exemplos com o seguinte conjunto de dados que tem 15 observações e 5 variáveis (`municipio`, `tipo`, `ano`, `vacinados`), e uma estrutura não arrumada.
+
+```{r}
+(caes_vacinados2 <- data.frame(municipio = rep(letters[1:5], 2),
+                              tipo = rep(c('rural', 'urbano'), e = 5),
+                              ano1 = rpois(5, 600),
+                              ano2 = rpois(5, 500),
+                              ano3 = rpois(5, 550)))
+```
+
+```{r, results='hide'}
+gather(caes_vacinados2, ano, vacinados, ano1:ano3) # Colunas entre ano1 e ano3.
+```
+
+```{r, results='hide'}
+gather(caes_vacinados2, ano, vacinados, ano1, ano2, ano3)
+```
+
+```{r, results='hide'}
+gather(caes_vacinados2, ano, vacinados, -municipio, -tipo)
+```
+
+```{r, results='hide'}
+gather(caes_vacinados2, ano, vacinados, -c(municipio, tipo))
+```
+
+```{r, results='hide'}
+gather(caes_vacinados2, ano, vacinados, -c(municipio:tipo))
+```
+
+### Mais de uma variável está contida em uma coluna só
+
+Mais de uma variável pode estar contida em uma coluna só quando cada valor dessa coluna é a combinação dos valores de mais de uma variável, ou quando os valores dessa coluna são variáveis.  
+
+No banco a seguir há 10 observações de 10 fêmeas identificados pela variável `id`. A coluna `idade_filhotes` contém o número de anos das fêmeas no momento do seu último parto e o número de filhotes nesse parto  (9/3: 9 anos e 3 filhotes). Assim, o banco tem 2 colunas e 3 variáveis, sendo que cada valor da coluna `idade_filhotes` contém o valor de duas variáveis: anos das fêmeas no momento do seu último parto e o número de filhotes nesse parto.
+
+```{r}
+set.seed(7)
+(idades <- data.frame(id = 1:10,
+                      idade_filhotes = paste(sample(c(1:9), 10, r = T),
+                                             sample(1:12, 10, r = T),
+                                             sep = '/')))
+```
+
+Para arrumar a estrutura do banco podemos usar a função `separate`.
+
+```{r}
+(idades <-separate(idades, idade_filhotes,
+                   into = c('idade', 'filhotes'),
+                   sep = '/'))
+```
+
+Pelo código anterior, a coluna separada foi `idade_filhotes`, o critério de separação foi `/`, o conteúdo à esquerda de `/` passou a ser a coluna `idade` e o conteúdo à direita a coluna `filhotes`. Como a coluna inicial era tipo caractere, as resultantes também. No capítulo *Operações em bancos de dados* veremos alternativas eficientes para mudar o conteúdo dos data frames (por exemplo o tipo das colunas).
+
+```{r}
+str(idades)
+```
+
+Consideremos um outro banco com casos notificados e confirmados em 6 municípios diferentes.
+
+```{r}
+(casos <- data.frame(municipio = letters[1:6],
+                     status = rep(c('notificados', 'confirmados'), e = 6),
+                     total = c(617, 534, 811, 233, 184, 79)))
+```
+
+No banco `casos` os valores da coluna `status` são variáveis. Para arrumarmos a estrutura de `casos` precisamos que cada valor diferente passe a ser uma coluna. Com a função `spread` só precisamos especificar a coluna que tem mais de uma variável, e a coluna cujos valores serão espalhados nas colunas a serem criadas.
+
+```{r}
+spread(casos, status, total)
+```
+
+### Encadeamento
+
+`spread` é a função inversa de `gather`.
+
+```{r}
+gather(spread(casos, status, total), status, total, -municipio)
+```
+
+No código anterior aplicamos a função `spread` ao banco `casos` (`spread(casos, status, total)`) e o resultado foi o primeiro argumento da função `gather`.  
+
+No lugar de escrevermos um código que é executado de dentro para fora, podemos usar o operador `%>%` que aplica o resultado do que está à esquerda como primeiro argumento do que está à direita.
+
+```{r}
+exp(sqrt(log(10)))
+```
+
+```{r}
+10 %>% log() %>% sqrt() %>% exp()
+```
+
+```{r}
+casos %>%
+  spread(status, total) %>%
+  gather(status, total, -municipio)
+```
+
+### Data frame do resultado de uma função
+
+Muitas funções retornam resultados em estruturas complexas (por exemplo listas aninhadas) de difícil manipulação. Um exemplo é a função `lm` que ajusta uma regressão linear. A teoria da regressão linear está além do escopo deste livro, mas para os exemplos a seguir, podemos pensar que dado um banco com uma variável desfecho *y* e uma variável explicativa *x*, uma regressão linear simples determina a associação linear entre *x* e *y*, e quantifica entre outras coisas a proporção da variação em *y* explicada por *x* (R^2 ajustado), e a significância estatística da associação (valor *p* para o coeficiente estimado de *x*).  
+
+Assim, dado o seguinte banco
+
+```{r}
+set.seed(4)
+x <- rnorm(500, 50, 10)
+banco <- data.frame(grupo = rep(1:10, e = 50),
+                    y = 1 + 0.4 * x + rnorm(500, 0, 10),
+                    x = x)
+head(banco)
+```
+
+podemos ajustar uma regressão linear e ver o sumário do resultado.
+
+```{r}
+modelo <- lm(y ~ x, data = banco)
+summary(modelo)
+```
+
+Na função `lm` o primeiro argumento é uma fórmula (`variável resposta ~ varfiável explicativa`) que usa variáveis contidas no banco especificado no argumento `data`.  
+
+A estrutura de `summary(modelo)` é uma lista aninhada 
+
+```{r}
+str(summary(modelo))
+```
+
+e nós já sabemos como indexar os elementos de essas estruturas. Temos como extrair o R^2 ajustado e o valor p para *x* com o seguinte código:
+
+```{r}
+summary(modelo)$coefficients[2, 4]
+summary(modelo)$adj.r.squared
+```
+
+Porém é muito mais fácil trabalhar com os resultados contidos em data frames arrumados, especialmente quando esses resultados são os argumentos para funções a serem aplicada subsequentemente. O pacote `broom` tem funções que a partir de resultados em uma estrutura complexa, produzem data frames arrumados do conteúdo principal (`tidy`), das medidas de sumarização (`glance`), e da combinação dos dados com o resultado da função aplicada aos mesmos (`augment`).  
+
+Assim, com a função `glance` é mais simples obter os dois valores anteriores.
+
+```{r}
+library(broom)
+glance(summary(modelo))
+glance(summary(modelo))[ , c(2, 5)]
+```
+
+A utilidade da `tidy` e `augment` aplicadas em `modelo` pode ser difícil de enxergar para que não tem familiaridade com as regressões, mas a título de exemplo seguem os códigos.  
+
+```{r}
+tidy(summary(modelo))
+```
+
+```{r}
+head(augment(modelo))
+```

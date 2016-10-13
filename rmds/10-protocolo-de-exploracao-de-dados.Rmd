@@ -1,0 +1,337 @@
+```{r knitsetup, echo=FALSE, results='hide', warning=FALSE, message=FALSE, cache=FALSE}
+library(knitr)
+opts_knit$set(base.dir='./')
+opts_chunk$set(prompt=TRUE, comment='', fig.path='figures/')
+options(width = 66)
+```
+
+## Protocolo de exploração de dados
+
+Há erros de manipulação e análise que comprometem as conclusões baseadas em dados. Pensando nisso, Zuur e col. propuseram um protocolo de exploração de dados para evitar erros comuns e facilitar a verificação dos pressupostos de métodos estatísticos comuns. O manuscrito [A protocol for data exploration to avoid common statistical problems](http://onlinelibrary.wiley.com/wol1/doi/10.1111/j.2041-210X.2009.00001.x/full) apresenta 8 passos a serem considerados na exploração de dados, assim como bancos de dados e códigos no R para exemplificar a proposta.  
+
+Os códigos do presente capítulo são uma implementação alternativa dos 8 passos que ao serem aplicados nos bancos do artigo, produzem resultados equivalentes. Considero mais simples os códigos do presente capítulo, mas cada leitor terá sua própria opinião ao compará-los com os códigos originais.  
+
+Os aspectos conceituais devem ser consultados no manuscrito, pois o foco aqui é o código. Como já conhecemos a maioria das ferramentas deste capítulo, me limitarei a comentar só as novidades que sejam consideravelmente diferentes.
+
+### Sumário básico
+
+```{r, message=FALSE}
+library(MASS); library(caret); library(GGally); library(car)
+library(ggplot2); library(dplyr); library(tidyr)
+sparrows <- read.table('SparrowsElphick.txt', header = T)
+head(sparrows)
+str(sparrows)
+```
+
+Junto com `str` e `head`, `summary` é uma das funções básicas para a exploração de dados.
+
+```{r}
+summary(sparrows)
+```
+
+### Detecção de outliers
+
+#### Box plot
+
+Os boxplot dentro do pacote `ggplot2` são conceituados para representar uma variável qualitativa e uma quantitativa. Portanto, é necessário instanciar os argumentos `x` e `y` na função `aes`. Quando o objetivo é criar um boxplot de uma variável quantitativa sem considerar outra qualitativa, devemos instanciar `x` de qualquer forma e posteriormente omitir a etiqueta e marca do respectivo eixo.
+
+```{r}
+ggplot(sparrows, aes(x = 1, y = wingcrd)) +
+  geom_boxplot() +
+  xlab('') +
+  ylab('Wing length (mm)') +
+  theme(axis.ticks.x = element_blank(),
+        axis.text.x = element_blank())
+```
+
+Nesses casos, a abordagem convencional do R é bem mais simples.
+
+```{r}
+boxplot(sparrows$wingcrd, ylab = 'Wing length (mm)')
+```
+
+#### Dotplot
+
+```{r}
+ggplot(sparrows, aes(wingcrd, 1:nrow(sparrows))) +
+  geom_point() +
+  xlab('Wing length (mm)') +
+  ylab('Order of data')
+```
+
+```{r}
+ggplot(sparrows, aes(wingcrd)) +
+  geom_dotplot(method = 'histodot', binwidth = 1, dotsize = .3) +
+  xlab('Wing length (mm)') +
+  ylab('Percentage')
+```
+
+```{r}
+sparrows2 <- sparrows %>%
+  mutate(order = 1:nrow(sparrows)) %>%
+  select(order, wingcrd, tarsus, head, culmen, nalospi, wt)
+head(sparrows2)
+```
+
+```{r}
+sparrows2 <- gather(sparrows2, variable, value, -order)
+head(sparrows2)
+```
+
+```{r}
+ggplot(sparrows2, aes(value, order)) +
+  geom_point() +
+  facet_wrap(~ variable) +
+  xlab('Wing length (mm)') +
+  ylab('Order of the data')
+```
+
+```{r}
+sparrows2$variable <- factor(sparrows2$variable,
+                            levels = c('culmen', 'nalospi', 'wt',
+                                       'wingcrd', 'tarsus', 'head'),
+                            labels = c('culmen length', 'nalospi to bill tip',
+                                       'weight', 'wing length',
+                                       'tarsus length', 'head length'))
+```
+
+```{r}
+ggplot(sparrows2, aes(value, order)) +
+  geom_point() +
+  facet_wrap(~ variable) +
+  xlab('Value') +
+  ylab('Order of the data')
+```
+
+### Homogeneidade de variâncias
+
+#### Box plot
+
+```{r}
+godwits <- read.table('Godwits.txt', header = T)
+str(godwits)
+```
+
+A variável `SEX` tem três valores diferentes (`0`, `1` e `2`). ). O `1` representa as fêmeas e o `2` os machos. Para omitirmos o `0` e atribuir etiquetas transformaremos a variável em um fator só com os níveis de interesse (`1` e `2`).
+
+```{r}
+godwits <- godwits %>%
+  mutate(SEX = factor(SEX, levels = c(1, 2),
+                      labels = c('Female', 'Male')),
+         PERIOD = factor(PERIOD, levels = c(0, 1, 2),
+                         labels = c('Summer', 'Pre-migration', 'Winter')))
+```
+
+As observações com `0` são representadas com `NA`.
+
+```{r}
+ggplot(godwits, aes(PERIOD, mgconsumed, fill = SEX)) +
+  geom_boxplot() +
+  xlab('Migration rate') +
+  ylab('Intake rate')
+```
+
+A função `na.omit` omite todas as observações com `NA`.
+
+```{r}
+ggplot(na.omit(godwits), aes(PERIOD, mgconsumed, fill = SEX)) +
+  geom_boxplot() +
+  xlab('Migration rate') +
+  ylab('Intake rate')
+```
+
+```{r}
+ggplot(na.omit(godwits), aes(PERIOD, mgconsumed)) +
+  geom_boxplot() +
+  facet_wrap(~ SEX) +
+  xlab('Migration rate') +
+  ylab('Intake rate')
+```
+
+### Distribuição normal
+
+#### Histograma
+
+```{r}
+str(sparrows)
+sparrows$Month <- factor(sparrows$Month,
+                        levels = c(5, 6, 7, 8, 9, 10),
+                        labels = c('May', 'June', 'July', 'August',
+                                   'Sep', 'Oct'))
+```
+
+```{r}
+ggplot(filter(sparrows, Month == 'June' | Month == 'July' | Month == 'August'),
+       aes(wt)) +
+  geom_histogram(color = 'gray') +
+  xlab('Weight (g)') +
+  ylab('Frequency')
+```
+
+```{r}
+ggplot(filter(sparrows, Month == 'June' | Month == 'July' | Month == 'August'),
+       aes(wt)) +
+  geom_histogram(color = 'gray') +
+  facet_wrap(~ Month, ncol = 1) +
+  xlab('Weight (g)') +
+  ylab('Frequency')
+  
+```
+
+### Exceso de zeros
+
+#### Proporção de zeros
+
+```{r}
+rice_field <- read.table(file='ElphickBirdData.txt', header = T)
+```
+
+A função `table` retorna a frequência de valores únicos de um vetor.
+
+```{r}
+table(c(1, 1, 0, 3, 4, 4, 4))
+```
+
+```{r}
+freqs <- table(with(rice_field, round(AREA * AQBIRDS)))
+freqs[1:5]
+freqs[1] / nrow(rice_field)
+```
+
+```{r}
+ggplot(rice_field, aes(round(AREA * AQBIRDS))) +
+  geom_histogram(binwidth = 1) +
+  xlim(c(-1, 100))
+```
+
+#### Correlograma
+
+Os correlogramas são tipicamente usados para representar matrizes de correlação. Entretanto, servem para outros propósitos como ilustrado no manuscrito e a continuação.
+
+```{r}
+especies <- rice_field[, 14:62]
+abundancia <- colSums(especies > 0, na.rm = T)
+especies2 <- especies[, abundancia > 40]
+cls <- ncol(especies2)
+prop_zeros <- matrix(ncol = cls, nrow = cls)
+
+# Para reproduzir a matriz que gera o gráfico do artigo, o laço de repetição 
+# é baseado no objeto especies, mas pela lógica das linhas anteriores
+# (que reproduzem as linhas correspondentes do material suplementar),
+# acredito que deveria ser o obetjo especies2.
+for (i in 1:cls) {
+  for (j in 1:cls){
+    prop_zeros[i, j] <- sum(especies[, i] == 0 & especies[, j] == 0, na.rm = T)
+  }
+}
+
+prop_zeros <- prop_zeros / nrow(especies2)
+rownames(prop_zeros) <- names(especies2)
+colnames(prop_zeros) <- names(especies2)
+```
+
+```{r, message=FALSE}
+library(corrplot)
+corrplot(prop_zeros, method = 'pie')
+```
+
+Como o triângulo inferior é uma imagem especular do superior, é desnecessário apresentar a matriz completa.
+
+```{r}
+corrplot(prop_zeros, method = 'pie', type = 'lower')
+```
+
+
+### Colinearidade
+
+```{r}
+sparrows3 <- read.table(file = 'VegSamplesV1.txt', header = T)
+```
+
+#### VIF
+
+```{r, message=FALSE}
+mod1 <- lm(Banded ~ Avgmaxht + Avgdens + ht.thatch + S.patens +
+              Distichlis + S.alternifloraShort + S.alternifloraTall +
+              Juncus + Bare + Other + Phragmites + Shrub + Tallsedge +
+               Water, data = sparrows3)
+summary(mod1)
+vif(mod1)
+cbind(vif(mod1))
+```
+
+A seguinte estrutura de controle elimina sequencialmente a covariável com o maior VIF até que o maior VIF seja menor do que 3. `form` é um caractere que representa a fórmula da regressão e para incluí-lo como argumento de `lm` devemos usar a função `as.formula`. O código deve ser modificado antes de ser usado com variáveis explicativas qualitativas.
+
+```{r}
+vifs <- sort(vif(mod1), d = T)
+while(vifs[1] > 3) {
+    form <- paste('Banded', '~', paste0(names(vifs[-1]), collapse = ' + '))
+    mod2 <- lm(as.formula(form), sparrows3)
+    vifs <- sort(vif(mod2), d = T)
+}
+summary(mod2)
+```
+
+#### Seleção por AIC (stepwise)
+
+```{r}
+mod3 <- stepAIC(mod2, trace = -1)
+summary(mod3)
+```
+
+### Relação entre variáveis
+
+#### Gráfico de dispersão e linha de ajuste (modelo não linear)
+
+```{r, message=FALSE, warning=FALSE}
+featurePlot(sparrows3[, names(vifs)], sparrows3$Banded,
+            type = c('p', 'smooth'))
+```
+
+#### Correlograma
+
+```{r}
+pairs(sparrows[, c(1, 3, 4, 5, 6, 7)])
+ggpairs(sparrows[, c(1, 3, 4, 5, 6, 7)])
+```
+
+### Interação
+
+#### Gráfico de dispersão e linha de ajuste (modelo não linear)
+
+```{r}
+sparrows4 <- filter(sparrows, SpeciesCode == 1 & Sex != '0' & wingcrd < 65)
+sparrows4$Sex <- factor(sparrows4$Sex, levels = c(4, 5),
+                        labels = c('Male', 'Female'))
+
+ggplot(sparrows4, aes(wingcrd, wt)) +
+  geom_point() +
+  stat_smooth(method = 'lm', se = F) +
+  facet_grid(Sex ~ Month)
+```
+
+### Independência temporal do desfecho
+
+#### Linhas
+
+```{r}
+waders <- read.table(file = 'wader.txt', header = T)
+
+ggplot(waders, aes(1:25, C.fuscicolis)) +
+  geom_line() +
+  xlab('Time (2 weeks)') +
+  ylab('C. fuscicollis abundance')
+
+ggplot(waders, aes(1:25, L.dominicanus)) +
+  geom_line() +
+  xlab('Time (2 weeks)') +
+  ylab('L. dominicanus abundance')
+```
+
+#### Gráficos de autocorrelação
+
+```{r}
+acf(waders$C.fuscicolis, main = 'C. fuscicollis ACF')
+acf(waders$L.dominicanus, main = 'L. dominicanus ACF')
+```
+
