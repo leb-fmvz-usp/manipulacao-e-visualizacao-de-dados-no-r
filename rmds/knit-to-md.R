@@ -1,4 +1,4 @@
-setwd('./rmds/~/Documents/projects/manipulacao-e-visualizacao-de-dados-no-r/')
+setwd('~/Documents/projects/manipulacao-e-visualizacao-de-dados-no-r/')
 library(knitr)
 library(markdown)
 rm(list = ls())
@@ -14,4 +14,4 @@ knit('./rmds/08-estruturacao-de-bancos-de-dados.Rmd')
 knit('./rmds/09-operacoes-em-bancos-de-dados.Rmd')
 knit('./rmds/10-protocolo-de-exploracao-de-dados.Rmd')
 
-setwd('./rmds/~/Documents/projects/manipulacao-e-visualizacao-de-dados-no-r/rmds/')
+setwd('~/Documents/projects/manipulacao-e-visualizacao-de-dados-no-r/rmds/')
