@@ -16,7 +16,7 @@ As boas práticas de programação incluem, entre outras coisas:
 
 A consideração dos itens anteriores está além dos propósitos deste livro, mas são discutidos por outros ([Wilson e col., 2014](http://journals.plos.org/plosbiology/article?id=10.1371/journal.pbio.1001745); [Wickham, 2014](http://adv-r.had.co.nz/)). No entanto, o estilo de programação, que é transversal aos itens listados, será o foco deste capítulo.  
 
-No R, as convenções quanto ao estilo são menos uniformes em comparação com outras linguagens, e isso se evidencia na falta de um único estilo e na existência de mais de uma recomendação em relação a uma mesma questão. Os estilos propostos por [Google](https://google.github.io/styleguide/Rguide.xml) e por [Wickham, 2014](http://adv-r.had.co.nz/Style.html) são referências populares, específicas para o R. Esses estilos são a base do que veremos neste capítulo. Por outro lado, os artigos de [Wilson e col., 2014](http://journals.plos.org/plosbiology/article?id=10.1371/journal.pbio.1001745) e [Wikipedia](https://en.wikipedia.org/wiki/Comment_(computer_programming)#Need_for_comments) são referências genéricas.  
+No R, as convenções quanto ao estilo são menos uniformes em comparação com outras linguagens, e isso se evidencia na falta de um único estilo e na existência de mais de uma recomendação em relação a uma mesma questão. Os estilos propostos por [Google](https://google.github.io/styleguide/Rguide.xml) e por [Wickham, 2014](http://adv-r.had.co.nz/Style.html) são referências populares, específicas para o R. Esses estilos são a base do que veremos neste capítulo.  
 
 ### Designação
 
