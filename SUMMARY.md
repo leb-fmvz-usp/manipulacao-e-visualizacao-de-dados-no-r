@@ -3,7 +3,7 @@
 * [Folha de rostro](folha-de-rostro.md)
 * [Autor](author.md)
 * [Introdução](README.md)
-* [Instalação e interface](01-instalacao-e-interface.md)
+* [Instalação e interface](instalacao-e-interface.md)
 * [Estilo de programação](02-estilo.md)
 * [Tipos e estruturas de objetos](03-objetos.md)
 * [Importação e exportação de arquivos](04-arquivos.md)
