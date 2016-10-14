@@ -1,1 +1,1 @@
-![](authors.jpg)
+![](author.jpg)
