@@ -151,35 +151,33 @@ Nesses casos, a abordagem convencional do R é bem mais simples.
 > sparrows2 <- sparrows %>%
 +   mutate(order = 1:nrow(sparrows)) %>%
 +   select(order, wingcrd, tarsus, head, culmen, nalospi, wt)
-```
-
-```
-Error in select(., order, wingcrd, tarsus, head, culmen, nalospi, wt): unused arguments (order, wingcrd, tarsus, head, culmen, nalospi, wt)
-```
-
-```r
 > head(sparrows2)
 ```
 
 ```
-Error in head(sparrows2): object 'sparrows2' not found
+  order wingcrd tarsus head culmen nalospi   wt
+1     1    59.0   22.3 31.2   12.3    13.0  9.5
+2     2    54.0   20.3 28.3   10.8     7.8 12.2
+3     3    53.0   21.6 30.2   12.5     8.5 13.8
+4     4    55.0   19.7 30.4   12.1     8.3 13.8
+5     5    55.0   20.3 28.7   11.2     8.0 14.1
+6     6    53.5   20.8 30.6   12.8     8.6 14.8
 ```
 
 
 ```r
 > sparrows2 <- gather(sparrows2, variable, value, -order)
-```
-
-```
-Error in is.data.frame(x): object 'sparrows2' not found
-```
-
-```r
 > head(sparrows2)
 ```
 
 ```
-Error in head(sparrows2): object 'sparrows2' not found
+  order variable value
+1     1  wingcrd  59.0
+2     2  wingcrd  54.0
+3     3  wingcrd  53.0
+4     4  wingcrd  55.0
+5     5  wingcrd  55.0
+6     6  wingcrd  53.5
 ```
 
 
@@ -191,9 +189,7 @@ Error in head(sparrows2): object 'sparrows2' not found
 +   ylab('Order of the data')
 ```
 
-```
-Error in ggplot(sparrows2, aes(value, order)): object 'sparrows2' not found
-```
+![plot of chunk unnamed-chunk-9](figures/unnamed-chunk-9-1.png)
 
 
 ```r
@@ -205,10 +201,6 @@ Error in ggplot(sparrows2, aes(value, order)): object 'sparrows2' not found
 +                                        'tarsus length', 'head length'))
 ```
 
-```
-Error in factor(sparrows2$variable, levels = c("culmen", "nalospi", "wt", : object 'sparrows2' not found
-```
-
 
 ```r
 > ggplot(sparrows2, aes(value, order)) +
@@ -218,9 +210,7 @@ Error in factor(sparrows2$variable, levels = c("culmen", "nalospi", "wt", : obje
 +   ylab('Order of the data')
 ```
 
-```
-Error in ggplot(sparrows2, aes(value, order)): object 'sparrows2' not found
-```
+![plot of chunk unnamed-chunk-11](figures/unnamed-chunk-11-1.png)
 
 ### Homogeneidade de variâncias
 
