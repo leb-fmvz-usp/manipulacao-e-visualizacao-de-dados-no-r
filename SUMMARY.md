@@ -1,7 +1,7 @@
 # Sumário
 
 * [Folha de rostro](folha-de-rostro.md)
-* [Autores](authors.md)
+* [Autor](author.md)
 * [Introdução](README.md)
 * [Instalação e interface]('01-instalacao-e-interface.Rmd')
 * [Estilo de programação]('02-estilo.Rmd')
