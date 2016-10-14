@@ -2606,13 +2606,13 @@ a b c
 > barplot(table(trat_char))
 ```
 
-![plot of chunk unnamed-chunk-104](figures/unnamed-chunk-104-1.png)
+![plot of chunk 03-01](figures/03-01-1.png)
 
 ```r
 > barplot(table(trat_fat))
 ```
 
-![plot of chunk unnamed-chunk-104](figures/unnamed-chunk-104-2.png)
+![plot of chunk 03-01](figures/03-01-2.png)
 
 Se a intensidade do tratamento "c" é menor do que a do "b" e esta menor do que a do "a", podemos explicitar essa ordem com o argumento `order`.
 
@@ -2963,7 +2963,7 @@ As funções são objetos que podemos usar e criar para automatizar tarefas repe
 ```
 
 ```
-[1] "Thu Oct 13 16:46:46 2016"
+[1] "Fri Oct 14 12:38:04 2016"
 ```
 
 Nas funções que têm argumentos, os mesmos têm nomes, posições específicas e opcionalmente, valores predefinidos. Tomando a função `seq` como exemplo, a página de ajuda mostra-nós que existem os seguintes argumentos:

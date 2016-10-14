@@ -922,7 +922,7 @@ Com a estrutura fator podemos manter explicitamente todas as categorias usando o
 
 e assim, a categoria "c" aparecerá em operações posteriores.
 
-```{r}
+```{r 03-01}
 table(trat_fat)
 barplot(table(trat_char))
 barplot(table(trat_fat))

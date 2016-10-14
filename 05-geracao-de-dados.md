@@ -312,8 +312,8 @@ Com a distribuição uniforme, cada elemento tem a mesma probabilidade de ser se
 ```
 
 ```
- [1]   7.009422  39.467684  45.439467  39.548744 -41.106495
- [6] -21.522766  35.895192 -29.865533 -17.588015   4.010501
+ [1] -43.074894 -32.562751 -32.390062   7.448826 -34.533168
+ [6] -45.838146  -8.382488 -32.311678  45.082097  41.735794
 ```
 
 Cada vez que for executado o comando anterior, serão selecionados 10 elementos de um conjunto de números contínuos que vão de -50 a 50. Para obtermos sempre o mesmo resultado, devemos executar a função `set.seed` antes da função que produz resultados aleatórios.

@@ -257,7 +257,13 @@ No capítulo *Objetos* vimos que para selecionar colunas de um data frame tínha
 ```
 
 ```
-Error in select(domicilios, 1:3): unused argument (1:3)
+  municipio id caes
+1        a1  1    0
+2        a1  2    2
+3        a1  3    0
+4        a1  4    0
+5        a1  5    1
+6        a1  6    1
 ```
 
 Nomes sem aspas.
@@ -268,7 +274,13 @@ Nomes sem aspas.
 ```
 
 ```
-Error in select(domicilios, c(municipio, id, caes)): unused argument (c(municipio, id, caes))
+  municipio id caes
+1        a1  1    0
+2        a1  2    2
+3        a1  3    0
+4        a1  4    0
+5        a1  5    1
+6        a1  6    1
 ```
 
 Podemos colocar as colunas como argumentos diferentes
@@ -279,7 +291,13 @@ Podemos colocar as colunas como argumentos diferentes
 ```
 
 ```
-Error in select(domicilios, municipio, id, gatos): unused arguments (municipio, id, gatos)
+  municipio id gatos
+1        a1  1     0
+2        a1  2     0
+3        a1  3     0
+4        a1  4     0
+5        a1  5     0
+6        a1  6     0
 ```
 
 
@@ -288,7 +306,13 @@ Error in select(domicilios, municipio, id, gatos): unused arguments (municipio, 
 ```
 
 ```
-Error in select(domicilios, 1, 2, 3): unused arguments (1, 2, 3)
+  municipio id caes
+1        a1  1    0
+2        a1  2    2
+3        a1  3    0
+4        a1  4    0
+5        a1  5    1
+6        a1  6    1
 ```
 
 e criar sequências de colunas não apenas com as posições (`1:3`), mas também com os nomes (`municipio:caes`).
@@ -299,7 +323,13 @@ e criar sequências de colunas não apenas com as posições (`1:3`), mas també
 ```
 
 ```
-Error in select(domicilios, municipio:caes): unused argument (municipio:caes)
+  municipio id caes
+1        a1  1    0
+2        a1  2    2
+3        a1  3    0
+4        a1  4    0
+5        a1  5    1
+6        a1  6    1
 ```
 
 O sinal `-` omite colunas.
@@ -310,7 +340,13 @@ O sinal `-` omite colunas.
 ```
 
 ```
-Error in select(domicilios, -municipio): unused argument (-municipio)
+  id caes gatos
+1  1    0     0
+2  2    2     0
+3  3    0     0
+4  4    0     0
+5  5    1     0
+6  6    1     0
 ```
 
 
@@ -319,7 +355,13 @@ Error in select(domicilios, -municipio): unused argument (-municipio)
 ```
 
 ```
-Error in select(domicilios, -municipio, -gatos): unused arguments (-municipio, -gatos)
+  id caes
+1  1    0
+2  2    2
+3  3    0
+4  4    0
+5  5    1
+6  6    1
 ```
 
 
@@ -328,7 +370,13 @@ Error in select(domicilios, -municipio, -gatos): unused arguments (-municipio, -
 ```
 
 ```
-Error in select(domicilios, -c(municipio:caes)): unused argument (-c(municipio:caes))
+  gatos
+1     0
+2     0
+3     0
+4     0
+5     0
+6     0
 ```
 
 Para selecionar com base em um vetor de caracteres, devemos usar a função `one_of`.
@@ -339,7 +387,13 @@ Para selecionar com base em um vetor de caracteres, devemos usar a função `one
 ```
 
 ```
-Error in select(domicilios, one_of(c("municipio", "id", "caes"))): unused argument (one_of(c("municipio", "id", "caes")))
+  municipio id caes
+1        a1  1    0
+2        a1  2    2
+3        a1  3    0
+4        a1  4    0
+5        a1  5    1
+6        a1  6    1
 ```
 
 Há um conjunto de funções que servem para selecionar colunas cujo nome começa, termina ou contém um dado caractere.
@@ -350,7 +404,13 @@ Há um conjunto de funções que servem para selecionar colunas cujo nome começ
 ```
 
 ```
-Error in select(domicilios, starts_with("ca")): unused argument (starts_with("ca"))
+  caes
+1    0
+2    2
+3    0
+4    0
+5    1
+6    1
 ```
 
 
@@ -359,7 +419,13 @@ Error in select(domicilios, starts_with("ca")): unused argument (starts_with("ca
 ```
 
 ```
-Error in select(domicilios, ends_with("s")): unused argument (ends_with("s"))
+  caes gatos
+1    0     0
+2    2     0
+3    0     0
+4    0     0
+5    1     0
+6    1     0
 ```
 
 
@@ -368,7 +434,13 @@ Error in select(domicilios, ends_with("s")): unused argument (ends_with("s"))
 ```
 
 ```
-Error in select(domicilios, contains("a")): unused argument (contains("a"))
+  caes gatos
+1    0     0
+2    2     0
+3    0     0
+4    0     0
+5    1     0
+6    1     0
 ```
 
 Quando os nomes das colunas têm um prefixo seguido por um número, podemos especificar o prefixo e uma sequência de números.
@@ -398,7 +470,13 @@ Quando os nomes das colunas têm um prefixo seguido por um número, podemos espe
 ```
 
 ```
-Error in select(banco_numerico, num_range(prefix = "V", 3:5)): unused argument (num_range(prefix = "V", 3:5))
+        V3       V4       V5
+1 17.84215 10.11744 17.66338
+2 16.54355 12.67403 16.82132
+3 13.78104 14.35572 12.09131
+4 10.08567 18.29467 17.11944
+5 19.55330 18.70944 16.05298
+6 18.38616 12.51069 13.40559
 ```
 
 Com `select_if` selecionamos só as colunas que satisfazem uma dada condição.
@@ -1234,5 +1312,23 @@ Reparem que no lugar de `do(head)` a sintaxe é `do(head(.))`. `.` é um *placeh
 ```
 
 ```
-Error in select(., adj.r.squared, p.value): unused arguments (adj.r.squared, p.value)
+Adding missing grouping variables: `grupo`
+```
+
+```
+Source: local data frame [10 x 3]
+Groups: grupo [10]
+
+   grupo adj.r.squared      p.value
+   <int>         <dbl>        <dbl>
+1      1    0.30580219 1.863413e-05
+2      2    0.13891126 4.463162e-03
+3      3    0.27526672 5.469821e-05
+4      4    0.19286524 8.358439e-04
+5      5    0.13704449 4.724054e-03
+6      6    0.14038104 4.267737e-03
+7      7    0.05742603 5.158791e-02
+8      8    0.04843200 6.770084e-02
+9      9    0.06243191 4.437932e-02
+10    10    0.11335589 9.666115e-03
 ```

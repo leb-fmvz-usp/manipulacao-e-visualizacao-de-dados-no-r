@@ -167,7 +167,7 @@ Após a instalação, o pacote deve ser carregado com a função `library`, ante
 par(mar = rep(.01, 4))
 ```
 
-```{r, fig.cap=''}
+```{r01-01, fig.cap=''}
 library(maps)
 map('world')
 ```

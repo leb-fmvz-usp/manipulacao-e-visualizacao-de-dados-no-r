@@ -1,3 +1,10 @@
+```{r knitsetup, echo=FALSE, results='hide', warning=FALSE, message=FALSE, cache=FALSE}
+library(knitr)
+opts_knit$set(base.dir='./')
+opts_chunk$set(prompt=TRUE, comment='', fig.path='figures/')
+options(width = 66)
+```
+
 ## Importação e exportação de arquivos
 
 Uma forma comum de estruturar os dados é em tabelas com linhas e colunas, sendo que cada linha corresponde a uma observação, e cada coluna a uma variável medida nas observações. Por exemplo, na tabela a seguir a unidade de observação é o domicílio, há cinco observações, e duas variáveis medidas em cada observação.

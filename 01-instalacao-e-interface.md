@@ -178,7 +178,9 @@ Usando o pacote *maps* como exemplo, podemos ver que a tentativa de usar `map` -
 > map('world')
 ```
 
-![plot of chunk unnamed-chunk-5](figures/unnamed-chunk-5-1.png)
+```
+Error in eval(expr, envir, enclos): could not find function "map"
+```
 
 Para instalar o pacote podemos executar o comando `install.packages('maps')` ou ir no painel *Packages*, clicar no ícone *install*, digitar *maps* na janela aberta, ativar a opção *Install dependencies*, e clicar *Install*.  
 
@@ -197,10 +199,19 @@ Após a instalação, o pacote deve ser carregado com a função `library`, ante
 
 ```r
 > library(maps)
+```
+
+```
+
+ # maps v3.1: updated 'world': all lakes moved to separate new #
+ # 'lakes' database. Type '?world' or 'news(package="maps")'.  #
+```
+
+```r
 > map('world')
 ```
 
-![](figures/unnamed-chunk-7-1.png)
+![](figures/01-01-1.png)
 
 
 

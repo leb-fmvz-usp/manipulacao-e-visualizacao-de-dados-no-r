@@ -35,7 +35,7 @@ summary(sparrows)
 
 Os boxplot dentro do pacote `ggplot2` são conceituados para representar uma variável qualitativa e uma quantitativa. Portanto, é necessário instanciar os argumentos `x` e `y` na função `aes`. Quando o objetivo é criar um boxplot de uma variável quantitativa sem considerar outra qualitativa, devemos instanciar `x` de qualquer forma e posteriormente omitir a etiqueta e marca do respectivo eixo.
 
-```{r}
+```{r 10-01}
 ggplot(sparrows, aes(x = 1, y = wingcrd)) +
   geom_boxplot() +
   xlab('') +
@@ -46,20 +46,20 @@ ggplot(sparrows, aes(x = 1, y = wingcrd)) +
 
 Nesses casos, a abordagem convencional do R é bem mais simples.
 
-```{r}
+```{r 10-02}
 boxplot(sparrows$wingcrd, ylab = 'Wing length (mm)')
 ```
 
 #### Dotplot
 
-```{r}
+```{r 10-03}
 ggplot(sparrows, aes(wingcrd, 1:nrow(sparrows))) +
   geom_point() +
   xlab('Wing length (mm)') +
   ylab('Order of data')
 ```
 
-```{r}
+```{r 10-04}
 ggplot(sparrows, aes(wingcrd)) +
   geom_dotplot(method = 'histodot', binwidth = 1, dotsize = .3) +
   xlab('Wing length (mm)') +
@@ -78,7 +78,7 @@ sparrows2 <- gather(sparrows2, variable, value, -order)
 head(sparrows2)
 ```
 
-```{r}
+```{r 10-05}
 ggplot(sparrows2, aes(value, order)) +
   geom_point() +
   facet_wrap(~ variable) +
@@ -95,7 +95,7 @@ sparrows2$variable <- factor(sparrows2$variable,
                                        'tarsus length', 'head length'))
 ```
 
-```{r}
+```{r 10-06}
 ggplot(sparrows2, aes(value, order)) +
   geom_point() +
   facet_wrap(~ variable) +
@@ -107,14 +107,14 @@ ggplot(sparrows2, aes(value, order)) +
 
 #### Box plot
 
-```{r}
+```{r 10-07}
 godwits <- read.table('Godwits.txt', header = T)
 str(godwits)
 ```
 
 A variável `SEX` tem três valores diferentes (`0`, `1` e `2`). ). O `1` representa as fêmeas e o `2` os machos. Para omitirmos o `0` e atribuir etiquetas transformaremos a variável em um fator só com os níveis de interesse (`1` e `2`).
 
-```{r}
+```{r 10-08}
 godwits <- godwits %>%
   mutate(SEX = factor(SEX, levels = c(1, 2),
                       labels = c('Female', 'Male')),
@@ -124,7 +124,7 @@ godwits <- godwits %>%
 
 As observações com `0` são representadas com `NA`.
 
-```{r}
+```{r 10-09}
 ggplot(godwits, aes(PERIOD, mgconsumed, fill = SEX)) +
   geom_boxplot() +
   xlab('Migration rate') +
@@ -133,14 +133,14 @@ ggplot(godwits, aes(PERIOD, mgconsumed, fill = SEX)) +
 
 A função `na.omit` omite todas as observações com `NA`.
 
-```{r}
+```{r 10-10}
 ggplot(na.omit(godwits), aes(PERIOD, mgconsumed, fill = SEX)) +
   geom_boxplot() +
   xlab('Migration rate') +
   ylab('Intake rate')
 ```
 
-```{r}
+```{r 10-11}
 ggplot(na.omit(godwits), aes(PERIOD, mgconsumed)) +
   geom_boxplot() +
   facet_wrap(~ SEX) +
@@ -152,7 +152,7 @@ ggplot(na.omit(godwits), aes(PERIOD, mgconsumed)) +
 
 #### Histograma
 
-```{r}
+```{r 10-12}
 str(sparrows)
 sparrows$Month <- factor(sparrows$Month,
                         levels = c(5, 6, 7, 8, 9, 10),
@@ -160,7 +160,7 @@ sparrows$Month <- factor(sparrows$Month,
                                    'Sep', 'Oct'))
 ```
 
-```{r}
+```{r 10-13}
 ggplot(filter(sparrows, Month == 'June' | Month == 'July' | Month == 'August'),
        aes(wt)) +
   geom_histogram(color = 'gray') +
@@ -168,7 +168,7 @@ ggplot(filter(sparrows, Month == 'June' | Month == 'July' | Month == 'August'),
   ylab('Frequency')
 ```
 
-```{r}
+```{r 10-14}
 ggplot(filter(sparrows, Month == 'June' | Month == 'July' | Month == 'August'),
        aes(wt)) +
   geom_histogram(color = 'gray') +
@@ -198,7 +198,7 @@ freqs[1:5]
 freqs[1] / nrow(rice_field)
 ```
 
-```{r}
+```{r 10-15}
 ggplot(rice_field, aes(round(AREA * AQBIRDS))) +
   geom_histogram(binwidth = 1) +
   xlim(c(-1, 100))
@@ -230,14 +230,14 @@ rownames(prop_zeros) <- names(especies2)
 colnames(prop_zeros) <- names(especies2)
 ```
 
-```{r, message=FALSE}
+```{r 10-16, message=FALSE}
 library(corrplot)
 corrplot(prop_zeros, method = 'pie')
 ```
 
 Como o triângulo inferior é uma imagem especular do superior, é desnecessário apresentar a matriz completa.
 
-```{r}
+```{r 10-17}
 corrplot(prop_zeros, method = 'pie', type = 'lower')
 ```
 
@@ -283,14 +283,14 @@ summary(mod3)
 
 #### Gráfico de dispersão e linha de ajuste (modelo não linear)
 
-```{r, message=FALSE, warning=FALSE}
+```{r 10-18, message=FALSE, warning=FALSE}
 featurePlot(sparrows3[, names(vifs)], sparrows3$Banded,
             type = c('p', 'smooth'))
 ```
 
 #### Correlograma
 
-```{r}
+```{r 10-19}
 pairs(sparrows[, c(1, 3, 4, 5, 6, 7)])
 ggpairs(sparrows[, c(1, 3, 4, 5, 6, 7)])
 ```
@@ -299,7 +299,7 @@ ggpairs(sparrows[, c(1, 3, 4, 5, 6, 7)])
 
 #### Gráfico de dispersão e linha de ajuste (modelo não linear)
 
-```{r}
+```{r 10-20}
 sparrows4 <- filter(sparrows, SpeciesCode == 1 & Sex != '0' & wingcrd < 65)
 sparrows4$Sex <- factor(sparrows4$Sex, levels = c(4, 5),
                         labels = c('Male', 'Female'))
@@ -314,7 +314,7 @@ ggplot(sparrows4, aes(wingcrd, wt)) +
 
 #### Linhas
 
-```{r}
+```{r 10-21}
 waders <- read.table(file = 'wader.txt', header = T)
 
 ggplot(waders, aes(1:25, C.fuscicolis)) +
@@ -330,7 +330,7 @@ ggplot(waders, aes(1:25, L.dominicanus)) +
 
 #### Gráficos de autocorrelação
 
-```{r}
+```{r 10-22}
 acf(waders$C.fuscicolis, main = 'C. fuscicollis ACF')
 acf(waders$L.dominicanus, main = 'L. dominicanus ACF')
 ```

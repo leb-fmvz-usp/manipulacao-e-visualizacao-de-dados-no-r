@@ -113,7 +113,7 @@ Os boxplot dentro do pacote `ggplot2` são conceituados para representar uma var
 +         axis.text.x = element_blank())
 ```
 
-![plot of chunk unnamed-chunk-3](figures/unnamed-chunk-3-1.png)
+![plot of chunk 10-01](figures/10-01-1.png)
 
 Nesses casos, a abordagem convencional do R é bem mais simples.
 
@@ -122,7 +122,7 @@ Nesses casos, a abordagem convencional do R é bem mais simples.
 > boxplot(sparrows$wingcrd, ylab = 'Wing length (mm)')
 ```
 
-![plot of chunk unnamed-chunk-4](figures/unnamed-chunk-4-1.png)
+![plot of chunk 10-02](figures/10-02-1.png)
 
 #### Dotplot
 
@@ -134,7 +134,7 @@ Nesses casos, a abordagem convencional do R é bem mais simples.
 +   ylab('Order of data')
 ```
 
-![plot of chunk unnamed-chunk-5](figures/unnamed-chunk-5-1.png)
+![plot of chunk 10-03](figures/10-03-1.png)
 
 
 ```r
@@ -144,7 +144,7 @@ Nesses casos, a abordagem convencional do R é bem mais simples.
 +   ylab('Percentage')
 ```
 
-![plot of chunk unnamed-chunk-6](figures/unnamed-chunk-6-1.png)
+![plot of chunk 10-04](figures/10-04-1.png)
 
 
 ```r
@@ -189,7 +189,7 @@ Nesses casos, a abordagem convencional do R é bem mais simples.
 +   ylab('Order of the data')
 ```
 
-![plot of chunk unnamed-chunk-9](figures/unnamed-chunk-9-1.png)
+![plot of chunk 10-05](figures/10-05-1.png)
 
 
 ```r
@@ -210,7 +210,7 @@ Nesses casos, a abordagem convencional do R é bem mais simples.
 +   ylab('Order of the data')
 ```
 
-![plot of chunk unnamed-chunk-11](figures/unnamed-chunk-11-1.png)
+![plot of chunk 10-06](figures/10-06-1.png)
 
 ### Homogeneidade de variâncias
 
@@ -256,7 +256,7 @@ As observações com `0` são representadas com `NA`.
 +   ylab('Intake rate')
 ```
 
-![plot of chunk unnamed-chunk-14](figures/unnamed-chunk-14-1.png)
+![plot of chunk 10-09](figures/10-09-1.png)
 
 A função `na.omit` omite todas as observações com `NA`.
 
@@ -268,7 +268,7 @@ A função `na.omit` omite todas as observações com `NA`.
 +   ylab('Intake rate')
 ```
 
-![plot of chunk unnamed-chunk-15](figures/unnamed-chunk-15-1.png)
+![plot of chunk 10-10](figures/10-10-1.png)
 
 
 ```r
@@ -279,7 +279,7 @@ A função `na.omit` omite todas as observações com `NA`.
 +   ylab('Intake rate')
 ```
 
-![plot of chunk unnamed-chunk-16](figures/unnamed-chunk-16-1.png)
+![plot of chunk 10-11](figures/10-11-1.png)
 
 ### Distribuição normal
 
@@ -331,7 +331,7 @@ A função `na.omit` omite todas as observações com `NA`.
 `binwidth`.
 ```
 
-![plot of chunk unnamed-chunk-18](figures/unnamed-chunk-18-1.png)
+![plot of chunk 10-13](figures/10-13-1.png)
 
 
 ```r
@@ -348,7 +348,7 @@ A função `na.omit` omite todas as observações com `NA`.
 `binwidth`.
 ```
 
-![plot of chunk unnamed-chunk-19](figures/unnamed-chunk-19-1.png)
+![plot of chunk 10-14](figures/10-14-1.png)
 
 ### Exceso de zeros
 
@@ -404,7 +404,7 @@ A função `table` retorna a frequência de valores únicos de um vetor.
 Warning: Removed 400 rows containing non-finite values (stat_bin).
 ```
 
-![plot of chunk unnamed-chunk-23](figures/unnamed-chunk-23-1.png)
+![plot of chunk 10-15](figures/10-15-1.png)
 
 #### Correlograma
 
@@ -439,7 +439,7 @@ Os correlogramas são tipicamente usados para representar matrizes de correlaç�
 > corrplot(prop_zeros, method = 'pie')
 ```
 
-![plot of chunk unnamed-chunk-25](figures/unnamed-chunk-25-1.png)
+![plot of chunk 10-16](figures/10-16-1.png)
 
 Como o triângulo inferior é uma imagem especular do superior, é desnecessário apresentar a matriz completa.
 
@@ -448,7 +448,7 @@ Como o triângulo inferior é uma imagem especular do superior, é desnecessári
 > corrplot(prop_zeros, method = 'pie', type = 'lower')
 ```
 
-![plot of chunk unnamed-chunk-26](figures/unnamed-chunk-26-1.png)
+![plot of chunk 10-17](figures/10-17-1.png)
 
 
 ### Colinearidade
@@ -766,7 +766,7 @@ F-statistic: 11.21 on 2 and 57 DF,  p-value: 7.858e-05
 +             type = c('p', 'smooth'))
 ```
 
-![plot of chunk unnamed-chunk-31](figures/unnamed-chunk-31-1.png)
+![plot of chunk 10-18](figures/10-18-1.png)
 
 #### Correlograma
 
@@ -775,13 +775,13 @@ F-statistic: 11.21 on 2 and 57 DF,  p-value: 7.858e-05
 > pairs(sparrows[, c(1, 3, 4, 5, 6, 7)])
 ```
 
-![plot of chunk unnamed-chunk-32](figures/unnamed-chunk-32-1.png)
+![plot of chunk 10-19](figures/10-19-1.png)
 
 ```r
 > ggpairs(sparrows[, c(1, 3, 4, 5, 6, 7)])
 ```
 
-![plot of chunk unnamed-chunk-32](figures/unnamed-chunk-32-2.png)
+![plot of chunk 10-19](figures/10-19-2.png)
 
 ### Interação
 
@@ -799,7 +799,7 @@ F-statistic: 11.21 on 2 and 57 DF,  p-value: 7.858e-05
 +   facet_grid(Sex ~ Month)
 ```
 
-![plot of chunk unnamed-chunk-33](figures/unnamed-chunk-33-1.png)
+![plot of chunk 10-20](figures/10-20-1.png)
 
 ### Independência temporal do desfecho
 
@@ -815,7 +815,7 @@ F-statistic: 11.21 on 2 and 57 DF,  p-value: 7.858e-05
 +   ylab('C. fuscicollis abundance')
 ```
 
-![plot of chunk unnamed-chunk-34](figures/unnamed-chunk-34-1.png)
+![plot of chunk 10-21](figures/10-21-1.png)
 
 ```r
 > ggplot(waders, aes(1:25, L.dominicanus)) +
@@ -824,7 +824,7 @@ F-statistic: 11.21 on 2 and 57 DF,  p-value: 7.858e-05
 +   ylab('L. dominicanus abundance')
 ```
 
-![plot of chunk unnamed-chunk-34](figures/unnamed-chunk-34-2.png)
+![plot of chunk 10-21](figures/10-21-2.png)
 
 #### Gráficos de autocorrelação
 
@@ -833,11 +833,11 @@ F-statistic: 11.21 on 2 and 57 DF,  p-value: 7.858e-05
 > acf(waders$C.fuscicolis, main = 'C. fuscicollis ACF')
 ```
 
-![plot of chunk unnamed-chunk-35](figures/unnamed-chunk-35-1.png)
+![plot of chunk 10-22](figures/10-22-1.png)
 
 ```r
 > acf(waders$L.dominicanus, main = 'L. dominicanus ACF')
 ```
 
-![plot of chunk unnamed-chunk-35](figures/unnamed-chunk-35-2.png)
+![plot of chunk 10-22](figures/10-22-2.png)
 
