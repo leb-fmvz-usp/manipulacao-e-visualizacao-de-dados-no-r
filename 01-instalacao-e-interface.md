@@ -62,7 +62,7 @@ Um tipo de operação importante é a desingação (assign). No exemplo a seguir
 
 ![](interface/rstudio9.png)  
 
-Os dois comandos anteriores criaram dois objetos e todos os objetos são listados no painel *Environment*. Para imprimir o conteúdo de um objeto basta executar o nome. Vejamos esse comportamento com os objetos `x` e `y`, mas antes disso, limpemos a consola com o atalho \textit{Ctrl+L}.  
+Os dois comandos anteriores criaram dois objetos e todos os objetos são listados no painel *Environment*. Para imprimir o conteúdo de um objeto basta executar o nome. Vejamos esse comportamento com os objetos `x` e `y`, mas antes disso, limpemos a consola com o atalho *Ctrl+L*.  
 
 ![](interface/rstudio10.png)  
 
