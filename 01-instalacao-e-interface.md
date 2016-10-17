@@ -2,8 +2,6 @@
 
 ## Instalação e interface 
 
-### Introdução
-
 Uma linguagem de programação é um método padronizado para comunicar instruções para um computador e o [R](https://www.r-project.org/about.html) é uma linguagem de programação especializada na comunicação de instruções para a manipulação, cálculo e visualização de dados. Formalmente o R é definido como uma linguagem e ambiente de programação estatística e produção de gráficos. Essa definição inclui o termo *ambiente* para indicar que o R é um sistema flexível, coerente e planejado; não apenas um conjunto de ferramentas estatísticas. Por outro lado, o R é um software gratuito, de código aberto e extensível. Isso quer dizer que não há que pagar para usá-lo (gratuito), a implementação das suas funções está disponível (código aberto), e os usuários podem acrescentar novas funções (extensível). A expressão [código aberto](https://pt.wikipedia.org/wiki/Software_de_c%C3%B3digo_aberto) indica que as instruções (código fonte) executadas por cada função são disponibilizadas sob uma licença de código aberto na qual o direito autoral fornece o direito de estudar, modificar e distribuir essas instruções de graça para qualquer um e para qualquer finalidade.
 
 ### Instalação
