@@ -66,7 +66,7 @@ A vantagem de `read.table` é que além de importar arquivos CSV, importa outras
 
 O RStudio tem uma interface para importar arquivos. No painel *Envorinment*, janela *Import Daset*, a opção *From Local File* abre a seguinte interface que permite definir várias opções, visualizar o arquivo de entrada e visualizar a forma em o arquivo será importado.  
 
-![](figure/rstudio40.png)  
+![](interface/rstudio40.png)  
 <br>
 
 #### Caracteres especiais
