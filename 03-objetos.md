@@ -2989,13 +2989,13 @@ As funções são objetos que podemos usar e criar para automatizar tarefas repe
 ```
 
 ```
-[1] "Fri Oct 28 16:58:30 2016"
+[1] "Fri Oct 28 17:45:57 2016"
 ```
 
 Nas funções que têm argumentos, os mesmos têm nomes, posições específicas e opcionalmente, valores predefinidos. Tomando a função `seq` como exemplo, a página de ajuda mostra-nós que existem os seguintes argumentos:
 
 <br>
-<table style='width:100%'>
+<table>
 <thead>
 <tr class='header'>
 <th align='left'> Argumento </th>

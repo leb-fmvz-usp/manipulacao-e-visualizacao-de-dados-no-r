@@ -1084,7 +1084,7 @@ date()
 Nas funções que têm argumentos, os mesmos têm nomes, posições específicas e opcionalmente, valores predefinidos. Tomando a função `seq` como exemplo, a página de ajuda mostra-nós que existem os seguintes argumentos:
 
 <br>
-<table style='width:100%'>
+<table>
 <thead>
 <tr class='header'>
 <th align='left'> Argumento </th>
