@@ -78,6 +78,13 @@ A função `order` também auxilia no ordenamento de dados, mas no lugar de reto
 order(populacao)
 ```
 
+`order` também tem o argumento `deacreasing`, mas não pode ser abreviado como no caso de `sort`.
+
+```{r}
+order(populacao, decreasing = T)
+```
+
+
 A ordenação de índices permite ordenar um ou mais vetores com base em outro vetor. Dessa maneira, podemos ordenar as regiões do exemplo anterior, com base no tamanho populacional.
 
 ```{r}
@@ -196,7 +203,7 @@ rnorm(n = 20, mean = 100, sd = 10)
 
 Se graficarmos a distribuição das frequências dos valores soretados, veremos que o formato se aproxima ao da campana de Gauss. Quanto mais números soretarmos, o formato da distribuição das frequências será mais próximo ao da campana de Gauss.
 
-```{r}
+```{r 05-01}
 set.seed(43)
 hist(rnorm(150, 100, 10))
 set.seed(43)
