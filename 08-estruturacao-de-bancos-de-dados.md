@@ -13,55 +13,55 @@ Por outro lado, as funções do pacote `broom` arrumam a estrutura dos resultado
 
 ### Os nomes de colunas são valores de uma variável, não variáveis em si
 
-Um conjunto de dados com 20 observações e 3 variáveis (município, tipo de município: rural ou urbano, e total de vacinados) pode estar estruturado da seguinte maneira:
+Um conjunto de dados com 20 observações e 3 variáveis (setor censitário, tipo de região: rural ou urbano, e total de vacinados) pode estar estruturado da seguinte maneira:
 
 
 ```r
 > set.seed(100)
-> (caes_vacinados <- data.frame(municipio = letters[1:10],
+> (caes_vacinados <- data.frame(setor = letters[1:10],
 +                              rural = rpois(10, 40),
 +                              urbano = rpois(10, 600)))
 ```
 
 ```
-   municipio rural urbano
-1          a    36    595
-2          b    29    629
-3          c    45    585
-4          d    40    590
-5          e    42    629
-6          f    36    608
-7          g    42    572
-8          h    37    618
-9          i    40    606
-10         j    40    618
+   setor rural urbano
+1      a    36    595
+2      b    29    629
+3      c    45    585
+4      d    40    590
+5      e    42    629
+6      f    36    608
+7      g    42    572
+8      h    37    618
+9      i    40    606
+10     j    40    618
 ```
 
-Se os nomes das colunas `rural` e `urbano` são valores da variável *tipo de município*, a estrutura arrumada deve ter 20 linhas e 3 colunas.
+Se os nomes das colunas `rural` e `urbano` são valores da variável *tipo de região*, a estrutura arrumada deve ter 20 linhas e 3 colunas.
 
 
 ```
-   municipio   tipo vacinados
-1          a  rural        36
-2          b  rural        29
-3          c  rural        45
-4          d  rural        40
-5          e  rural        42
-6          f  rural        36
-7          g  rural        42
-8          h  rural        37
-9          i  rural        40
-10         j  rural        40
-11         a urbano       595
-12         b urbano       629
-13         c urbano       585
-14         d urbano       590
-15         e urbano       629
-16         f urbano       608
-17         g urbano       572
-18         h urbano       618
-19         i urbano       606
-20         j urbano       618
+   setor   tipo vacinados
+1      a  rural        36
+2      b  rural        29
+3      c  rural        45
+4      d  rural        40
+5      e  rural        42
+6      f  rural        36
+7      g  rural        42
+8      h  rural        37
+9      i  rural        40
+10     j  rural        40
+11     a urbano       595
+12     b urbano       629
+13     c urbano       585
+14     d urbano       590
+15     e urbano       629
+16     f urbano       608
+17     g urbano       572
+18     h urbano       618
+19     i urbano       606
+20     j urbano       618
 ```
 
 Com a função `gather` do `tydir` podemos transformar a primeira estrutura na segunda especificando o banco, o nome de duas colunas *chave* e *valor*, e as colunas que não são variáveis.
@@ -73,43 +73,43 @@ Com a função `gather` do `tydir` podemos transformar a primeira estrutura na s
 ```
 
 ```
-   municipio   tipo vacinados
-1          a  rural        36
-2          b  rural        29
-3          c  rural        45
-4          d  rural        40
-5          e  rural        42
-6          f  rural        36
-7          g  rural        42
-8          h  rural        37
-9          i  rural        40
-10         j  rural        40
-11         a urbano       595
-12         b urbano       629
-13         c urbano       585
-14         d urbano       590
-15         e urbano       629
-16         f urbano       608
-17         g urbano       572
-18         h urbano       618
-19         i urbano       606
-20         j urbano       618
+   setor   tipo vacinados
+1      a  rural        36
+2      b  rural        29
+3      c  rural        45
+4      d  rural        40
+5      e  rural        42
+6      f  rural        36
+7      g  rural        42
+8      h  rural        37
+9      i  rural        40
+10     j  rural        40
+11     a urbano       595
+12     b urbano       629
+13     c urbano       585
+14     d urbano       590
+15     e urbano       629
+16     f urbano       608
+17     g urbano       572
+18     h urbano       618
+19     i urbano       606
+20     j urbano       618
 ```
 
-Pelo código anterior a coluna *chave* (`key`) recebeu o nome `tipo` e armazenou os valores `rural` e `urbano`. A coluna *valor* (`value`) recebeu o nome `vacinados` e armazenou os valores correspondentes aos valores das variáveis `municipio` e `tipo`.  
+Pelo código anterior a coluna *chave* (`key`) recebeu o nome `tipo` e armazenou os valores `rural` e `urbano`. A coluna *valor* (`value`) recebeu o nome `vacinados` e armazenou os valores correspondentes aos valores das variáveis `setor` e `tipo`.  
 
 No lugar de especificar as colunas que não são variáveis, outra opção consiste em especificar as que são variáveis, precedidas por um sinal negativo. 
 
 
 ```r
-> caes_vacinados <- gather(caes_vacinados, tipo, vacinados, -municipio)
+> caes_vacinados <- gather(caes_vacinados, tipo, vacinados, -setor)
 ```
 
-Reparem que os nomes das colunas não estão contidos em aspas. No capítulo *Objetos* vimos que para selecionar colunas de um data frame tínhamos que usar um vetor com as posições das colunas ou com os nomes entre aspas. O `tydir` é mais flexível na hora de selecionar colunas. Vejamos alguns exemplos com o seguinte conjunto de dados que tem 15 observações e 5 variáveis (`municipio`, `tipo`, `ano`, `vacinados`), e uma estrutura não arrumada.
+Reparem que os nomes das colunas não estão contidos em aspas. No capítulo *Objetos* vimos que para selecionar colunas de um data frame tínhamos que usar um vetor com as posições das colunas ou com os nomes entre aspas. O `tydir` é mais flexível na hora de selecionar colunas. Vejamos alguns exemplos com o seguinte conjunto de dados que tem 15 observações e 5 variáveis (`setor`, `tipo`, `ano`, `vacinados`), e uma estrutura não arrumada.
 
 
 ```r
-> (caes_vacinados2 <- data.frame(municipio = rep(letters[1:5], 2),
+> (caes_vacinados2 <- data.frame(setor = rep(letters[1:5], 2),
 +                               tipo = rep(c('rural', 'urbano'), e = 5),
 +                               ano1 = rpois(5, 600),
 +                               ano2 = rpois(5, 500),
@@ -117,17 +117,17 @@ Reparem que os nomes das colunas não estão contidos em aspas. No capítulo *Ob
 ```
 
 ```
-   municipio   tipo ano1 ano2 ano3
-1          a  rural  580  539  557
-2          b  rural  579  496  567
-3          c  rural  605  496  518
-4          d  rural  571  495  582
-5          e  rural  580  541  508
-6          a urbano  580  539  557
-7          b urbano  579  496  567
-8          c urbano  605  496  518
-9          d urbano  571  495  582
-10         e urbano  580  541  508
+   setor   tipo ano1 ano2 ano3
+1      a  rural  580  539  557
+2      b  rural  579  496  567
+3      c  rural  605  496  518
+4      d  rural  571  495  582
+5      e  rural  580  541  508
+6      a urbano  580  539  557
+7      b urbano  579  496  567
+8      c urbano  605  496  518
+9      d urbano  571  495  582
+10     e urbano  580  541  508
 ```
 
 
@@ -142,17 +142,17 @@ Reparem que os nomes das colunas não estão contidos em aspas. No capítulo *Ob
 
 
 ```r
-> gather(caes_vacinados2, ano, vacinados, -municipio, -tipo)
+> gather(caes_vacinados2, ano, vacinados, -setor, -tipo)
 ```
 
 
 ```r
-> gather(caes_vacinados2, ano, vacinados, -c(municipio, tipo))
+> gather(caes_vacinados2, ano, vacinados, -c(setor, tipo))
 ```
 
 
 ```r
-> gather(caes_vacinados2, ano, vacinados, -c(municipio:tipo))
+> gather(caes_vacinados2, ano, vacinados, -c(setor:tipo))
 ```
 
 ### Mais de uma variável está contida em uma coluna só

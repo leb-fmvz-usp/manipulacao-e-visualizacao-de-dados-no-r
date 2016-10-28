@@ -36,28 +36,30 @@ Os aspectos conceituais devem ser consultados no manuscrito, pois o foco aqui é
 ```
 
 ```r
-> str(sparrows)
+> str(sparrows, vec.len = 1)
 ```
 
 ```
 'data.frame':	1295 obs. of  16 variables:
- $ wingcrd    : num  59 54 53 55 55 53.5 55.5 55 54 55 ...
- $ flatwing   : num  60 55 54 56 56 54.5 57 56 56 56 ...
- $ tarsus     : num  22.3 20.3 21.6 19.7 20.3 20.8 20.3 20.9 21.4 20.4 ...
- $ head       : num  31.2 28.3 30.2 30.4 28.7 30.6 29.5 30 29.8 29.8 ...
- $ culmen     : num  12.3 10.8 12.5 12.1 11.2 12.8 11.5 11.7 11 11.2 ...
- $ nalospi    : num  13 7.8 8.5 8.3 8 8.6 8.5 8.5 8.7 8.1 ...
- $ wt         : num  9.5 12.2 13.8 13.8 14.1 14.8 15 15 15.1 15.1 ...
- $ bandstat   : int  1 1 1 1 1 1 1 1 1 1 ...
- $ initials   : int  2 2 2 8 3 7 3 3 1 2 ...
- $ Year       : int  2002 2002 2002 2002 2002 2004 2002 2002 2002 2002 ...
- $ Month      : int  9 10 10 7 10 8 10 10 10 10 ...
- $ Day        : int  19 4 4 30 4 2 4 2 21 2 ...
- $ Location   : int  4 4 4 9 4 1 4 5 7 5 ...
- $ SpeciesCode: int  1 3 3 1 3 1 3 3 3 3 ...
- $ Sex        : int  0 0 0 0 0 0 0 0 0 0 ...
- $ Age        : int  2 2 2 2 2 2 2 1 2 2 ...
+ $ wingcrd    : num  59 54 ...
+ $ flatwing   : num  60 55 ...
+ $ tarsus     : num  22.3 20.3 ...
+ $ head       : num  31.2 28.3 ...
+ $ culmen     : num  12.3 10.8 ...
+ $ nalospi    : num  13 7.8 ...
+ $ wt         : num  9.5 12.2 ...
+ $ bandstat   : int  1 1 ...
+ $ initials   : int  2 2 ...
+ $ Year       : int  2002 2002 ...
+ $ Month      : int  9 10 ...
+ $ Day        : int  19 4 ...
+ $ Location   : int  4 4 ...
+ $ SpeciesCode: int  1 3 ...
+ $ Sex        : int  0 0 ...
+ $ Age        : int  2 2 ...
 ```
+
+Com `vec.len = 1`, `str` mostra menos valores de cada uma das variáveis.
 
 Junto com `str` e `head`, `summary` é uma das funções básicas para a exploração de dados.
 
@@ -359,18 +361,7 @@ A função `na.omit` omite todas as observações com `NA`.
 > rice_field <- read.table(file='ElphickBirdData.txt', header = T)
 ```
 
-A função `table` retorna a frequência de valores únicos de um vetor.
-
-
-```r
-> table(c(1, 1, 0, 3, 4, 4, 4))
-```
-
-```
-
-0 1 3 4 
-1 2 1 3 
-```
+Lembrando que `table` retorna a frequência de valores únicos de um vetor,
 
 
 ```r
@@ -383,6 +374,9 @@ A função `table` retorna a frequência de valores únicos de um vetor.
   0   1   2   3   4 
 718 131 108  46  52 
 ```
+
+A proporção de zeros é a divisão do total de zeros pelo número observações no banco.
+
 
 ```r
 > freqs[1] / nrow(rice_field)
@@ -592,145 +586,7 @@ F-statistic: 2.179 on 11 and 48 DF,  p-value: 0.03169
 
 
 ```r
-> mod3 <- stepAIC(mod2, trace = -1)
-```
-
-```
-Start:  AIC=294.03
-Banded ~ S.patens + S.alternifloraShort + Juncus + Distichlis + 
-    ht.thatch + Other + Phragmites + Bare + Shrub + Tallsedge + 
-    Water
-
-                      Df Sum of Sq    RSS    AIC
-- Other                1      0.52 5404.0 292.03
-- Bare                 1      2.14 5405.7 292.05
-- ht.thatch            1      5.48 5409.0 292.09
-- Water                1     17.61 5421.1 292.22
-- Tallsedge            1     70.90 5474.4 292.81
-- S.patens             1    108.46 5512.0 293.22
-- S.alternifloraShort  1    126.21 5529.7 293.41
-- Phragmites           1    138.15 5541.7 293.54
-- Distichlis           1    150.13 5553.7 293.67
-<none>                             5403.5 294.03
-- Shrub                1    428.70 5832.2 296.61
-- Juncus               1   1891.31 7294.8 310.04
-
-Step:  AIC=292.03
-Banded ~ S.patens + S.alternifloraShort + Juncus + Distichlis + 
-    ht.thatch + Phragmites + Bare + Shrub + Tallsedge + Water
-
-                      Df Sum of Sq    RSS    AIC
-- Bare                 1      2.42 5406.5 290.06
-- ht.thatch            1      5.15 5409.2 290.09
-- Water                1     17.15 5421.2 290.22
-- Tallsedge            1     78.02 5482.1 290.89
-- S.patens             1    109.94 5514.0 291.24
-- S.alternifloraShort  1    126.55 5530.6 291.42
-- Phragmites           1    137.79 5541.8 291.54
-- Distichlis           1    149.69 5553.7 291.67
-<none>                             5404.0 292.03
-- Shrub                1    428.33 5832.4 294.61
-- Juncus               1   1898.74 7302.8 308.10
-
-Step:  AIC=290.06
-Banded ~ S.patens + S.alternifloraShort + Juncus + Distichlis + 
-    ht.thatch + Phragmites + Shrub + Tallsedge + Water
-
-                      Df Sum of Sq    RSS    AIC
-- ht.thatch            1      3.88 5410.3 288.10
-- Water                1     17.07 5423.5 288.25
-- Tallsedge            1     79.59 5486.0 288.94
-- S.patens             1    107.59 5514.0 289.24
-- S.alternifloraShort  1    125.85 5532.3 289.44
-- Phragmites           1    136.91 5543.4 289.56
-- Distichlis           1    151.04 5557.5 289.71
-<none>                             5406.5 290.06
-- Shrub                1    431.04 5837.5 292.66
-- Juncus               1   1960.99 7367.4 306.63
-
-Step:  AIC=288.1
-Banded ~ S.patens + S.alternifloraShort + Juncus + Distichlis + 
-    Phragmites + Shrub + Tallsedge + Water
-
-                      Df Sum of Sq    RSS    AIC
-- Water                1     15.03 5425.4 286.27
-- Tallsedge            1     75.73 5486.1 286.94
-- S.patens             1    105.37 5515.7 287.26
-- S.alternifloraShort  1    126.77 5537.1 287.49
-- Distichlis           1    147.67 5558.0 287.72
-- Phragmites           1    157.95 5568.3 287.83
-<none>                             5410.3 288.10
-- Shrub                1    444.54 5854.9 290.84
-- Juncus               1   2000.48 7410.8 304.98
-
-Step:  AIC=286.27
-Banded ~ S.patens + S.alternifloraShort + Juncus + Distichlis + 
-    Phragmites + Shrub + Tallsedge
-
-                      Df Sum of Sq    RSS    AIC
-- Tallsedge            1     70.16 5495.5 285.04
-- S.patens             1     92.63 5518.0 285.29
-- S.alternifloraShort  1    117.31 5542.7 285.55
-- Distichlis           1    133.58 5558.9 285.73
-- Phragmites           1    150.09 5575.5 285.91
-<none>                             5425.4 286.27
-- Shrub                1    453.16 5878.5 289.08
-- Juncus               1   1993.59 7419.0 303.05
-
-Step:  AIC=285.04
-Banded ~ S.patens + S.alternifloraShort + Juncus + Distichlis + 
-    Phragmites + Shrub
-
-                      Df Sum of Sq    RSS    AIC
-- S.patens             1     90.15 5585.7 284.02
-- S.alternifloraShort  1     91.71 5587.2 284.03
-- Distichlis           1    111.72 5607.3 284.25
-- Phragmites           1    161.20 5656.7 284.77
-<none>                             5495.5 285.04
-- Shrub                1    446.11 5941.6 287.72
-- Juncus               1   1930.12 7425.7 301.10
-
-Step:  AIC=284.02
-Banded ~ S.alternifloraShort + Juncus + Distichlis + Phragmites + 
-    Shrub
-
-                      Df Sum of Sq    RSS    AIC
-- S.alternifloraShort  1     37.32 5623.0 282.42
-- Distichlis           1     81.08 5666.8 282.88
-- Phragmites           1    149.67 5735.3 283.60
-<none>                             5585.7 284.02
-- Shrub                1    462.26 6047.9 286.79
-- Juncus               1   1862.12 7447.8 299.28
-
-Step:  AIC=282.42
-Banded ~ Juncus + Distichlis + Phragmites + Shrub
-
-             Df Sum of Sq    RSS    AIC
-- Distichlis  1     62.74 5685.7 281.08
-- Phragmites  1    117.03 5740.0 281.65
-<none>                    5623.0 282.42
-- Shrub       1    425.12 6048.1 284.79
-- Juncus      1   1892.74 7515.7 297.82
-
-Step:  AIC=281.08
-Banded ~ Juncus + Phragmites + Shrub
-
-             Df Sum of Sq    RSS    AIC
-- Phragmites  1    129.47 5815.2 280.43
-<none>                    5685.7 281.08
-- Shrub       1    376.31 6062.0 282.93
-- Juncus      1   1917.77 7603.5 296.52
-
-Step:  AIC=280.43
-Banded ~ Juncus + Shrub
-
-         Df Sum of Sq    RSS    AIC
-<none>                5815.2 280.43
-- Shrub   1    341.07 6156.3 281.85
-- Juncus  1   2015.82 7831.0 296.29
-```
-
-```r
+> mod3 <- stepAIC(mod2, trace = 0)
 > summary(mod3)
 ```
 

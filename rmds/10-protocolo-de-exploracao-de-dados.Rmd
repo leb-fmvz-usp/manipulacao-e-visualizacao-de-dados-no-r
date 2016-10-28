@@ -20,8 +20,10 @@ library(MASS); library(caret); library(GGally); library(car)
 library(ggplot2); library(dplyr); library(tidyr)
 sparrows <- read.table('SparrowsElphick.txt', header = T)
 head(sparrows)
-str(sparrows)
+str(sparrows, vec.len = 1)
 ```
+
+Com `vec.len = 1`, `str` mostra menos valores de cada uma das variáveis.
 
 Junto com `str` e `head`, `summary` é uma das funções básicas para a exploração de dados.
 
@@ -186,15 +188,16 @@ ggplot(filter(sparrows, Month == 'June' | Month == 'July' | Month == 'August'),
 rice_field <- read.table(file='ElphickBirdData.txt', header = T)
 ```
 
-A função `table` retorna a frequência de valores únicos de um vetor.
-
-```{r}
-table(c(1, 1, 0, 3, 4, 4, 4))
-```
+Lembrando que `table` retorna a frequência de valores únicos de um vetor,
 
 ```{r}
 freqs <- table(with(rice_field, round(AREA * AQBIRDS)))
 freqs[1:5]
+```
+
+A proporção de zeros é a divisão do total de zeros pelo número observações no banco.
+
+```{r}
 freqs[1] / nrow(rice_field)
 ```
 
@@ -274,8 +277,8 @@ summary(mod2)
 
 #### Seleção por AIC (stepwise)
 
-```{r}
-mod3 <- stepAIC(mod2, trace = -1)
+```{r, message=FALSE}
+mod3 <- stepAIC(mod2, trace = 0)
 summary(mod3)
 ```
 
