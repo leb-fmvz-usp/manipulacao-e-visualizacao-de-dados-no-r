@@ -2989,43 +2989,10 @@ As funções são objetos que podemos usar e criar para automatizar tarefas repe
 ```
 
 ```
-[1] "Fri Oct 28 17:49:05 2016"
+[1] "Fri Oct 28 17:53:04 2016"
 ```
 
-Nas funções que têm argumentos, os mesmos têm nomes, posições específicas e opcionalmente, valores predefinidos. Tomando a função `seq` como exemplo, a página de ajuda mostra-nós que existem os seguintes argumentos:
-
-<br>
-<table>
-<thead>
-<tr>
-<th align='left'> Argumento </th>
-<th align='left'> Descrição </th>
-<th align='left'> Valor predefinido </th>
-</tr>
-</thead>
-<tr class='odd'>
-<td> from </td> <td> Valor inicial da sequência </td> <td> 1 </td>
-</tr>
-<tr class='even'>
-<td> to </td> <td> Valor final da sequência </td> <td> 1 </td>
-</tr>
-<tr class='odd'>
-<td> by </td> <td> Amplitude dos intervalos </td> <td> ((to - from)/(length.out - 1)) </td>
-</tr>
-<tr class='even'>
-<td> length.out </td> <td> Comprimento da sequência </td> <td> NULL </td>
-</tr>
-<tr>
-<td class='odd'> algon.with </td> <td> Comprimento igual ao comprimento do próprio argumento </td> <td> NULL </td>
-</tr>
-<tr class='odd'>
-<td> ... </td> <td> Argumentos passados para ou de outros métodos </td> <td>  </td>
-</tr>
-<tr>
-</table>
-<br>
-
-Os argumentos `from` e `to` que definem o começo e fim da sequência, tem "1" como valor padrão. O valor padrão de `by` é equivalente a "1". Os outros argumentos (excetuando `...` que será explorado em breve) não são usados por padrão, pois seu valor padrão é `NULL` (nulo). Se usarmos a função sem argumentos, serão usados os valores padrão.
+Nas funções que têm argumentos, os mesmos têm nomes, posições específicas e opcionalmente, valores predefinidos. Tomando a função `seq` como exemplo, os argumentos `from` e `to` que definem o começo e fim da sequência, tem "1" como valor padrão. O valor padrão de `by` é equivalente a "1". Os outros argumentos (excetuando `...` que será explorado em breve) não são usados por padrão, pois seu valor padrão é `NULL` (nulo). Se usarmos a função sem argumentos, serão usados os valores padrão.
 
 
 ```r
