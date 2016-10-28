@@ -60,7 +60,7 @@ No gráfico acima, as variáveis `notificados` e `confirmados` foram mapeadas no
 
 
 ```r
-> ggplot(data = casos, mapping = aes(x = notificados, y = confirmados)) +
+> ggplot(data = casos, mapping = aes(notificados, confirmados)) +
 +   geom_point()
 ```
 
@@ -70,7 +70,7 @@ Em capítulos anteriores usamos a função `plot` - que não segue os princípio
 
 
 ```r
-> plot(x = casos$notificados, y = casos$confirmados)
+> plot(casos$notificados, casos$confirmados)
 ```
 
 ![plot of chunk 06-03](figures/06-03-1.png)
@@ -79,7 +79,7 @@ Por que usar a função `ggplot` se a função `plot` é muito mais simples? Por
 
 
 ```r
-> ggplot(data = casos, aes(x = notificados, y = confirmados, color = sexo)) +
+> ggplot(data = casos, aes(notificados, confirmados)) +
 +   geom_point()
 ```
 
@@ -89,7 +89,7 @@ Embora seja possível criar um gráfico equivalente com a função `plot`, o ní
 
 
 ```r
-> ggplot(data = casos, aes(x = notificados, y = confirmados)) +
+> ggplot(data = casos, aes(notificados, confirmados)) +
 +   geom_point() +
 +   facet_grid(local ~ sexo)
 ```
@@ -104,7 +104,7 @@ Uma das principais fontes de confusão no uso do ggplot2 refere-se à forma de u
 
 
 ```r
-> ggplot(data = casos, mapping = aes(x = notificados, y = confirmados)) +
+> ggplot(data = casos, mapping = aes(notificados, confirmados)) +
 +   geom_point(color = 'blue')
 ```
 
@@ -114,7 +114,7 @@ ou mapear a variável `sexo` como feito anteriormente.
 
 
 ```r
-> ggplot(data = casos, aes(x = notificados, y = confirmados, color = sexo)) +
+> ggplot(data = casos, aes(notificados, confirmados, color = sexo)) +
 +   geom_point()
 ```
 
@@ -122,7 +122,7 @@ ou mapear a variável `sexo` como feito anteriormente.
 
 
 ```r
-> ggplot(data = casos, aes(x = notificados, y = confirmados)) +
+> ggplot(data = casos, aes(notificados, confirmados)) +
 +   geom_point(aes(color = sexo))
 ```
 
@@ -134,7 +134,7 @@ Ao usar `color = 'blue'` dentro da função `aes`, `blue` passa a ser uma variá
 
 
 ```r
-> ggplot(data = casos, aes(x = notificados, y = confirmados, color = 'blue')) +
+> ggplot(data = casos, aes(notificados, confirmados, color = 'blue')) +
 +   geom_point()
 ```
 
@@ -192,7 +192,7 @@ Para representar a contribuição relativa de cada espécie em cada intervalo, o
 
 
 ```r
-> his <- ggplot(casos, aes(notificados, fill = sexo))
+> his <- ggplot(casos, aes(notificados))
 > his + geom_histogram(bins = 10)
 ```
 
@@ -214,7 +214,7 @@ Ao mapearmos a variável `Species` na propriedade `fill`, as denisdades sobrepõ
 
 
 ```r
-> den <- ggplot(casos, aes(notificados, fill = sexo))
+> den <- ggplot(casos, aes(notificados))
 > den + geom_density()
 ```
 
@@ -224,7 +224,7 @@ Para vissualizar melhor cada uma das densidades podemos controlar a transparênc
 
 
 ```r
-> den <- ggplot(casos, aes(notificados, fill = sexo, color = sexo))
+> den <- ggplot(casos, aes(notificados))
 > den + geom_density(alpha = .5)
 ```
 
@@ -270,7 +270,7 @@ Os gráficos de pontos ou de dispersão representam com pontos o valor das duas 
 
 
 ```r
-> ggplot(casos, aes(x = notificados, y = confirmados, color = local)) +
+> ggplot(casos, aes(notificados, confirmados)) +
 +   geom_point()
 ```
 
@@ -282,7 +282,7 @@ Nos gráficos de linhas, para cada valor na amplitude de uma variável, existe u
 
 
 ```r
-> ggplot(casos, aes(x = semana, y = notificados)) +
+> ggplot(casos, aes(semana, notificados)) +
 +   geom_line()
 ```
 
@@ -292,7 +292,7 @@ No nosso banco, há 200 semanas e embora o registro de notificações tenha sido
 
 
 ```r
-> ggplot(casos, aes(x = semana, y = notificados)) +
+> ggplot(casos, aes(semana, notificados)) +
 +   geom_line() +
 +   geom_point(color = 'red')
 ```
@@ -303,7 +303,7 @@ A interpolação linear não é a única forma de estimar o valor de uma variáv
 
 
 ```r
-> ggplot(casos, aes(x = semana, y = notificados)) +
+> ggplot(casos, aes(semana, notificados)) +
 +   geom_step()
 ```
 
@@ -311,7 +311,7 @@ A interpolação linear não é a única forma de estimar o valor de uma variáv
 
 
 ```r
-> ggplot(casos, aes(x = semana, y = notificados)) +
+> ggplot(casos, aes(semana, notificados)) +
 +   geom_step() +
 +   geom_point(color = 'red')
 ```
@@ -322,7 +322,7 @@ ou usar modelos estatísticos cuja explicação está além do escopo deste livr
 
 
 ```r
-> ggplot(casos, aes(x = semana, y = notificados)) +
+> ggplot(casos, aes(semana, notificados)) +
 +   geom_smooth(method = 'lm')
 ```
 
@@ -336,7 +336,7 @@ Os boxplot representam a distribuição de uma variável quantitativa em cada um
 
 
 ```r
-> ggplot(casos, aes(x = sexo, y = notificados)) +
+> ggplot(casos, aes(sexo, notificados)) +
 +   geom_boxplot()
 ```
 
@@ -347,7 +347,7 @@ O gráfico acima sugere a inexistência de valores extremos, pois não há ponto
 
 ```r
 > casos$notificados[1:3] <- casos$notificados[1:3] + 300
-> ggplot(casos, aes(x = sexo, y = notificados)) +
+> ggplot(casos, aes(sexo, notificados)) +
 +   geom_boxplot()
 ```
 
@@ -401,7 +401,7 @@ Para facilitar comparação das medianas de duas categorias diferentes, a propri
 
 
 ```r
-> ggplot(casos, aes(x = sexo, y = notificados)) +
+> ggplot(casos, aes(sexo, notificados)) +
 +   geom_boxplot(notch = T)
 ```
 
@@ -413,7 +413,7 @@ Os gráficos de barras também permitem visualizar a relação entre as categori
 
 
 ```r
-> ggplot(casos, aes(x = sexo, y = notificados)) +
+> ggplot(casos, aes(sexo, notificados)) +
 +   geom_bar(stat = 'identity')
 ```
 
@@ -473,7 +473,7 @@ Além das propriedades estéticas das geometrias, existem outros elementos modif
 
 
 ```r
-> ggplot(casos, aes(x = notificados, y = confirmados, color = local)) +
+> ggplot(casos, aes(notificados, confirmados, color = local)) +
 +   geom_point() +
 +   theme_bw()
 ```
@@ -482,7 +482,7 @@ Além das propriedades estéticas das geometrias, existem outros elementos modif
 
 
 ```r
-> ggplot(casos, aes(x = notificados, y = confirmados, color = local)) +
+> ggplot(casos, aes(notificados, confirmados, color = local)) +
 +   geom_point() +
 +   theme_classic()
 ```
@@ -491,7 +491,7 @@ Além das propriedades estéticas das geometrias, existem outros elementos modif
 
 
 ```r
-> ggplot(casos, aes(x = notificados, y = confirmados, color = local)) +
+> ggplot(casos, aes(notificados, confirmados, color = local)) +
 +   geom_point() +
 +   theme_dark()
 ```
@@ -508,7 +508,7 @@ O título do eixos é dado pelo nome das variáveis mapeadas nas propriedades es
 
 
 ```r
-> ggplot(casos, aes(x = notificados, y = confirmados, color = local)) +
+> ggplot(casos, aes(notificados, confirmados, color = local)) +
 +   geom_point() +
 +   xlab('Alfa') +
 +   ylab('Beta')
@@ -520,7 +520,7 @@ Caracteres especiais são interpretados pela função `expression`,
 
 
 ```r
-> ggplot(casos, aes(x = notificados, y = confirmados, color = local)) +
+> ggplot(casos, aes(notificados, confirmados, color = local)) +
 +   geom_point() +
 +   xlab(expression(alpha)) +
 +   ylab(expression(beta))
@@ -532,7 +532,7 @@ enquanto sub e superescritos são incluídos pela função `bquote`.
 
 
 ```r
-> ggplot(casos, aes(x = notificados, y = confirmados, color = local)) +
+> ggplot(casos, aes(notificados, confirmados, color = local)) +
 +   geom_point() +
 +   xlab(bquote(alpha[2])) +
 +   ylab(bquote(beta^2))
@@ -544,7 +544,7 @@ O tamanho e a orientação são características do texto do elemento `axis.titl
 
 
 ```r
-> ggplot(casos, aes(x = notificados, y = confirmados, color = local)) +
+> ggplot(casos, aes(notificados, confirmados, color = local)) +
 +   geom_point() +
 +   theme(axis.title = element_text(size = 25, angle = 0))
 ```
@@ -555,7 +555,7 @@ O tamanho e a orientação são características do texto do elemento `axis.titl
 
 
 ```r
-> ggplot(casos, aes(x = notificados, y = confirmados, color = local)) +
+> ggplot(casos, aes(notificados, confirmados, color = local)) +
 +   geom_point() +
 +   theme(axis.title.x = element_text(size = 25, face = 'bold.italic',
 +                                     hjust = .9))
@@ -565,7 +565,7 @@ O tamanho e a orientação são características do texto do elemento `axis.titl
 
 
 ```r
-> ggplot(casos, aes(x = notificados, y = confirmados, color = local)) +
+> ggplot(casos, aes(notificados, confirmados, color = local)) +
 +   geom_point() +
 +   theme(axis.title.y = element_text(angle = 0, vjust = .1, color = 'red'))
 ```
@@ -578,7 +578,7 @@ As características das marcas são definidas pelo elemento `axis.text` e modifi
 
 
 ```r
-> ggplot(casos, aes(x = notificados, y = confirmados, color = local)) +
+> ggplot(casos, aes(notificados, confirmados, color = local)) +
 +   geom_point() +
 +   theme(axis.text = element_text(size = 25, angle = 45))
 ```
@@ -587,7 +587,7 @@ As características das marcas são definidas pelo elemento `axis.text` e modifi
 
 
 ```r
-> ggplot(casos, aes(x = notificados, y = confirmados, color = local)) +
+> ggplot(casos, aes(notificados, confirmados, color = local)) +
 +   geom_point() +
 +   theme(axis.text.x = element_text(color = 'blue'))
 ```
@@ -600,7 +600,7 @@ Ao acrescentarmos a função `coord_flip`, os eixos são transpostos.
 
 
 ```r
-> ggplot(casos, aes(x = notificados, y = confirmados, color = local)) +
+> ggplot(casos, aes(notificados, confirmados, color = local)) +
 +   geom_point() +
 +   coord_flip()
 ```
@@ -613,7 +613,7 @@ Para alterar a posição e a etiqueta devemos usar a função `scale_x_continuou
 
 
 ```r
-> ggplot(casos, aes(x = sexo, y = notificados)) +
+> ggplot(casos, aes(sexo, notificados)) +
 +   geom_boxplot(notch = T) +
 +   scale_x_discrete(breaks = c('F', 'M'), labels = c('Fêmeas', 'Machos')) +
 +   scale_y_continuous(breaks = seq(0, 300, by = 50))
@@ -623,7 +623,7 @@ Para alterar a posição e a etiqueta devemos usar a função `scale_x_continuou
 
 
 ```r
-> ggplot(casos, aes(x = notificados, y = confirmados, color = local)) +
+> ggplot(casos, aes(notificados, confirmados, color = local)) +
 +   geom_point() +
 +   scale_x_continuous(breaks = c(50, 150, 250)) +
 +   scale_y_continuous(breaks = seq(0, 30, by = 5))
@@ -641,7 +641,7 @@ Tanto o título como a posição e a etiqueta das marcas são definidos pelas fu
 
 
 ```r
-> ggplot(casos, aes(x = notificados, y = confirmados, color = local)) +
+> ggplot(casos, aes(notificados, confirmados, color = local)) +
 +   geom_point() +
 +   scale_color_discrete(name = 'Local', breaks = c('A', 'B'), labels = 1:2)
 ```
@@ -652,7 +652,7 @@ As características do texto do título e das marcas são modificadas seguindo a
 
 
 ```r
-> ggplot(casos, aes(x = notificados, y = confirmados, color = local)) +
+> ggplot(casos, aes(notificados, confirmados, color = local)) +
 +   geom_point() +
 +   theme(legend.title = element_text(size = 25),
 +         legend.text = element_text(face = 'bold'))
@@ -666,7 +666,7 @@ Podemos posicionar a legenda acima (`top`), abaixo (`bottom`) ou aos lados (`lef
 
 
 ```r
-> ggplot(casos, aes(x = notificados, y = confirmados, color = local)) +
+> ggplot(casos, aes(notificados, confirmados, color = local)) +
 +   geom_point() +
 +   theme(legend.position = 'top')
 ```
@@ -677,7 +677,7 @@ Para posicioná-la dentro dentro dentro da área graficada, devemos especificar 
 
 
 ```r
-> ggplot(casos, aes(x = notificados, y = confirmados, color = local)) +
+> ggplot(casos, aes(notificados, confirmados, color = local)) +
 +   geom_point() +
 +   theme(legend.position = c(.1, .7))
 ```
@@ -688,7 +688,7 @@ Também podemos tirar a legenda.
 
 
 ```r
-> ggplot(casos, aes(x = notificados, y = confirmados, color = local)) +
+> ggplot(casos, aes(notificados, confirmados, color = local)) +
 +   geom_point() +
 +   theme(legend.position = 'none')
 ```
@@ -701,7 +701,7 @@ A definição da cor é dada em termos de preenchimento (`fill`) e de contorno (
 
 
 ```r
-> ggplot(casos, aes(x = sexo, y = notificados)) +
+> ggplot(casos, aes(sexo, notificados)) +
 +   geom_boxplot(fill = 'lightblue', color = 'red')
 ```
 
@@ -730,7 +730,7 @@ São várias as cores disponíveis e além do nome é possível usar os formatos
 ```
 
 ```r
-> ggplot(casos, aes(x = sexo, y = notificados)) +
+> ggplot(casos, aes(sexo, notificados)) +
 +   geom_boxplot(fill = colors()[2], color = colors()[10])
 ```
 
@@ -742,7 +742,7 @@ Nos exemplos anteriores as cores foram definidas, mas nenhuma variável foi mape
 
 
 ```r
-> ggplot(casos, aes(x = sexo, y = notificados, fill = local)) +
+> ggplot(casos, aes(sexo, notificados, fill = local)) +
 +   geom_boxplot()
 ```
 
@@ -750,7 +750,7 @@ Nos exemplos anteriores as cores foram definidas, mas nenhuma variável foi mape
 
 
 ```r
-> ggplot(casos, aes(x = sexo, y = notificados, fill = local)) +
+> ggplot(casos, aes(sexo, notificados, fill = local)) +
 +   geom_boxplot() +
 +   scale_fill_manual(values = c('lightblue', 'darkred'))
 ```
@@ -759,7 +759,7 @@ Nos exemplos anteriores as cores foram definidas, mas nenhuma variável foi mape
 
 
 ```r
-> ggplot(casos, aes(x = sexo, y = notificados, color = local)) +
+> ggplot(casos, aes(sexo, notificados, color = local)) +
 +   geom_boxplot() +
 +   scale_color_manual(values = c('blue', 'green'))
 ```
@@ -770,7 +770,7 @@ No lugar de definirmos manualmente a cor de cada categoria, podemos escolher pal
 
 
 ```r
-> ggplot(casos, aes(x = sexo, y = notificados, fill = local)) +
+> ggplot(casos, aes(sexo, notificados, fill = local)) +
 +   geom_boxplot() +
 +   scale_fill_brewer(palette = 'Dark2')
 ```
@@ -834,7 +834,7 @@ Como no caso da cor e outras propriedades estéticas, temos como definir a forma
 
 
 ```r
-> ggplot(casos, aes(x = notificados, y = confirmados, color = local)) +
+> ggplot(casos, aes(notificados, confirmados, color = local)) +
 +   geom_point(shape = 3)
 ```
 
@@ -842,7 +842,7 @@ Como no caso da cor e outras propriedades estéticas, temos como definir a forma
 
 
 ```r
-> ggplot(casos, aes(x = notificados, y = confirmados,
+> ggplot(casos, aes(notificados, confirmados,
 +                   color = local, shape = local)) +
 +   geom_point()
 ```
@@ -851,7 +851,7 @@ Como no caso da cor e outras propriedades estéticas, temos como definir a forma
 
 
 ```r
-> ggplot(casos, aes(x = semana, y = notificados)) +
+> ggplot(casos, aes(semana, notificados)) +
 +   geom_line(linetype = 2)
 ```
 
@@ -859,7 +859,7 @@ Como no caso da cor e outras propriedades estéticas, temos como definir a forma
 
 
 ```r
-> ggplot(casos, aes(x = semana, y = notificados, linetype = sexo)) +
+> ggplot(casos, aes(semana, notificados, linetype = sexo)) +
 +   geom_line()
 ```
 
@@ -891,7 +891,7 @@ No começo do capítulo criamos um gráfico multivariado.
 
 
 ```r
-> ggplot(data = casos, aes(x = notificados, y = confirmados)) +
+> ggplot(data = casos, aes(notificados, confirmados)) +
 +   geom_point() +
 +   facet_grid(local ~ sexo)
 ```
@@ -902,7 +902,7 @@ A função `facet_grid` mapeia variáveis qualitativas nas linhas e colunas de u
 
 
 ```r
-> ggplot(data = casos, aes(x = notificados, y = confirmados)) +
+> ggplot(data = casos, aes(notificados, confirmados)) +
 +   geom_point() +
 +   facet_grid(. ~ sexo)
 ```
@@ -911,7 +911,7 @@ A função `facet_grid` mapeia variáveis qualitativas nas linhas e colunas de u
 
 
 ```r
-> ggplot(data = casos, aes(x = notificados, y = confirmados)) +
+> ggplot(data = casos, aes(notificados, confirmados)) +
 +   geom_point() +
 +   facet_grid(sexo ~ .)
 ```
@@ -922,7 +922,7 @@ A função `facet_grid` mapeia variáveis qualitativas nas linhas e colunas de u
 
 
 ```r
-> ggplot(data = casos, aes(x = notificados, y = confirmados)) +
+> ggplot(data = casos, aes(notificados, confirmados)) +
 +   geom_point() +
 +   facet_wrap(~ sexo, ncol = 1)
 ```
@@ -933,7 +933,7 @@ Quando se usam duas variáveis condicionantes, as combinações das categorias d
 
 
 ```r
-> ggplot(data = casos, aes(x = notificados, y = confirmados)) +
+> ggplot(data = casos, aes(notificados, confirmados)) +
 +   geom_point() +
 +   facet_wrap(local ~ sexo, ncol = 3)
 ```
@@ -954,7 +954,7 @@ A forma mais simples de mudar as etiquetas de cada painel é definindo as etique
 ```r
 > casos$sexo <- factor(as.character(casos$sexo), levels = c('F', 'M'),
 +                      labels = c('Fêmeas', 'Machos'))
-> ggplot(data = casos, aes(x = notificados, y = confirmados)) +
+> ggplot(data = casos, aes(notificados, confirmados)) +
 +   geom_point() +
 +   facet_grid(sexo ~ .)
 ```
@@ -974,7 +974,7 @@ Mudando a ordem dos níveis do fator também mudamos a ordem dos paineis.
 
 ```r
 > casos$sexo <- factor(casos$sexo, levels = c('Machos', 'Fêmeas'))
-> ggplot(data = casos, aes(x = notificados, y = confirmados)) +
+> ggplot(data = casos, aes(notificados, confirmados)) +
 +   geom_point() +
 +   facet_grid(sexo ~ .)
 ```
@@ -985,11 +985,56 @@ Com o elemento `strip.text.x` modificamos a apariência das etiquetas dos painei
 
 
 ```r
-> ggplot(data = casos, aes(x = notificados, y = confirmados)) +
+> ggplot(data = casos, aes(notificados, confirmados)) +
 +   geom_point() +
 +   facet_grid(. ~ sexo) + 
 +   theme(strip.text.x = element_text(size = 8, colour = 'orange', angle = 45))
 ```
 
 ![plot of chunk 06-78](figures/06-78-1.png)
+
+### Sintaxe abreviada
+
+O `ggplot2` tem a função `qplot` que usa uma sintaxe abreviada. Os dois primeiros argumentos são `x` e `y`, e a geometria é escolhida automaticamente.
+
+
+```r
+> qplot(casos$notificados, casos$confirmados)
+```
+
+![plot of chunk 06-79](figures/06-79-1.png)
+
+Se a geometria escolhida não é adequada, o argumento `geom` permite definir a gemoetria desejada.
+
+
+```r
+> qplot(casos$sexo, casos$confirmados)
+```
+
+![plot of chunk 06-80](figures/06-80-1.png)
+
+
+```r
+> qplot(casos$sexo, casos$confirmados, geom = 'boxplot')
+```
+
+![plot of chunk 06-81](figures/06-81-1.png)
+
+Outras propriedades estéticas também são definíveis dentro de `qplot`,
+
+
+```r
+> qplot(casos$notificados, casos$confirmados, color = casos$sexo)
+```
+
+![plot of chunk 06-82](figures/06-82-1.png)
+
+e alterantivamente, podemos especificar só o nome das variáveis se especificamos o banco no argumento `data`.
+
+
+```r
+> qplot(notificados, confirmados, data = casos)
+```
+
+![plot of chunk 06-83](figures/06-83-1.png)
 
