@@ -1,3 +1,5 @@
+
+
 ## Importação e exportação de arquivos
 
 Uma forma comum de estruturar os dados é em tabelas com linhas e colunas, sendo que cada linha corresponde a uma observação, e cada coluna a uma variável medida nas observações. Por exemplo, na tabela a seguir a unidade de observação é o domicílio, há cinco observações, e duas variáveis medidas em cada observação.
@@ -86,7 +88,7 @@ A vantagem de `read.table` é que além de importar arquivos CSV, importa outras
 
 O RStudio tem uma interface para importar arquivos. No painel *Envorinment*, janela *Import Daset*, a opção *From Local File* abre a seguinte interface que permite definir várias opções, visualizar o arquivo de entrada e visualizar a forma em o arquivo será importado.  
 
-![](figure/rstudio40.png)  
+![](interface/rstudio40.png)  
 <br>
 
 #### Caracteres especiais

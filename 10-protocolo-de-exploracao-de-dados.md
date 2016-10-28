@@ -361,11 +361,18 @@ A função `na.omit` omite todas as observações com `NA`.
 > rice_field <- read.table(file='ElphickBirdData.txt', header = T)
 ```
 
-Lembrando que `table` retorna a frequência de valores únicos de um vetor,
+Apos calcular a frequência de valores únicos do produto entre `AREA` e `AQBIRDS` com a função `table`,
 
 
 ```r
-> freqs <- table(with(rice_field, round(AREA * AQBIRDS)))
+> freqs <- table(round(rice_fieldAREA * rice_fieldAQBIRDS))
+```
+
+```
+Error in table(round(rice_fieldAREA * rice_fieldAQBIRDS)): object 'rice_fieldAREA' not found
+```
+
+```r
 > freqs[1:5]
 ```
 
@@ -375,7 +382,7 @@ Lembrando que `table` retorna a frequência de valores únicos de um vetor,
 718 131 108  46  52 
 ```
 
-A proporção de zeros é a divisão do total de zeros pelo número observações no banco.
+a proporção de zeros é a divisão do total de zeros pelo número observações no banco.
 
 
 ```r
