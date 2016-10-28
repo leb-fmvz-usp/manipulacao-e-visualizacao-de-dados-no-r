@@ -152,6 +152,18 @@ A função `order` também auxilia no ordenamento de dados, mas no lugar de reto
 [1] 4 2 1 3
 ```
 
+`order` também tem o argumento `deacreasing`, mas não pode ser abreviado como no caso de `sort`.
+
+
+```r
+> order(populacao, decreasing = T)
+```
+
+```
+[1] 3 1 2 4
+```
+
+
 A ordenação de índices permite ordenar um ou mais vetores com base em outro vetor. Dessa maneira, podemos ordenar as regiões do exemplo anterior, com base no tamanho populacional.
 
 
@@ -312,8 +324,8 @@ Com a distribuição uniforme, cada elemento tem a mesma probabilidade de ser se
 ```
 
 ```
- [1] -43.074894 -32.562751 -32.390062   7.448826 -34.533168
- [6] -45.838146  -8.382488 -32.311678  45.082097  41.735794
+ [1] -32.390062   7.448826 -34.533168 -45.838146  -8.382488
+ [6] -32.311678  45.082097  41.735794  26.586496 -20.087438
 ```
 
 Cada vez que for executado o comando anterior, serão selecionados 10 elementos de um conjunto de números contínuos que vão de -50 a 50. Para obtermos sempre o mesmo resultado, devemos executar a função `set.seed` antes da função que produz resultados aleatórios.
@@ -425,14 +437,14 @@ Se graficarmos a distribuição das frequências dos valores soretados, veremos 
 > hist(rnorm(150, 100, 10))
 ```
 
-![plot of chunk unnamed-chunk-23](figures/unnamed-chunk-23-1.png)
+![plot of chunk 05-01](figures/05-01-1.png)
 
 ```r
 > set.seed(43)
 > hist(rnorm(100000, 100, 10))
 ```
 
-![plot of chunk unnamed-chunk-23](figures/unnamed-chunk-23-2.png)
+![plot of chunk 05-01](figures/05-01-2.png)
 
 #### Distribuição de Poisson
 
