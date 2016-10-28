@@ -1471,6 +1471,23 @@ Algumas funções como `sum`, `cumsum`, `prod` e `cumprod` entre outras, coercio
 [1]  8 14 14 27 36 37 47 53 53
 ```
 
+A função `t` transpõe uma matriz (as linhas viram colunas e as colunas viram linhas).
+
+
+```r
+> t(vacinados)
+```
+
+```
+        grupo
+vacinado  a b c
+    sim   8 6 0
+    nao  13 9 1
+    desc 10 6 0
+```
+
+
+
 Outras funções operam dentro das colunas ou dentro das linhas.
 
 
@@ -2763,12 +2780,11 @@ O reposicionamento dos elementos não afeta a posição dos níveis
 
 
 ```r
-> trat_fat
+> levels(trat_fat)
 ```
 
 ```
-[1] d a a b
-Levels: a b c d
+[1] "a" "b" "c" "d"
 ```
 
 ```r
@@ -2780,23 +2796,33 @@ Levels: a b c d
 Levels: a b c d
 ```
 
+```r
+> levels(trat_fat)
+```
+
+```
+[1] "a" "b" "c" "d"
+```
+
 e o reposicionamento dos níveis não afeta nem a posição dos elementos, nem a ordem dos níveis.
 
-
-```r
-> (levels(trat_fat) <- levels(trat_fat)[4:1])
-```
-
-```
-[1] "d" "c" "b" "a"
-```
 
 ```r
 > trat_fat
 ```
 
 ```
-[1] c d d a
+[1] b a a d
+Levels: a b c d
+```
+
+```r
+> trat_fat <- factor(trat_fat, levels = levels(trat_fat)[4:1])
+> trat_fat
+```
+
+```
+[1] b a a d
 Levels: d c b a
 ```
 
@@ -2830,7 +2856,7 @@ A eliminação de um elemento não elimina o respectivo nível.
 ```
 
 ```
-[1] c d d a
+[1] b a a d
 Levels: d c b a
 ```
 
@@ -2839,7 +2865,7 @@ Levels: d c b a
 ```
 
 ```
-[1] c d a
+[1] b a d
 Levels: d c b a
 ```
 
@@ -2850,8 +2876,8 @@ A função `droplevels` elimina níveis inutilizados.
 ```
 
 ```
-[1] c d a
-Levels: d c a
+[1] b a d
+Levels: d b a
 ```
 
 Para eliminar tanto o elemento como o nível correspondente é necessário coercionar para caractere, eliminar o elementos e coercionar para fator.
@@ -2863,7 +2889,7 @@ Para eliminar tanto o elemento como o nível correspondente é necessário coerc
 ```
 
 ```
-[1] "c" "d"
+[1] "b" "d"
 ```
 
 ```r
@@ -2871,8 +2897,8 @@ Para eliminar tanto o elemento como o nível correspondente é necessário coerc
 ```
 
 ```
-[1] c d
-Levels: c d
+[1] b d
+Levels: b d
 ```
 
 #### Combinação
@@ -2909,7 +2935,7 @@ Além da coerção do tipo,
 ```
 
 ```
-[1] "c" "d"
+[1] "b" "d"
 ```
 
 é possível a coerção da estrutura.
@@ -2921,7 +2947,7 @@ Além da coerção do tipo,
 
 ```
      [,1]
-[1,] "c" 
+[1,] "b" 
 [2,] "d" 
 ```
 
@@ -2931,7 +2957,7 @@ Além da coerção do tipo,
 
 ```
   trat_fat
-1        c
+1        b
 2        d
 ```
 
@@ -2941,12 +2967,12 @@ Além da coerção do tipo,
 
 ```
 [[1]]
-[1] c
-Levels: c d
+[1] b
+Levels: b d
 
 [[2]]
 [1] d
-Levels: c d
+Levels: b d
 ```
 
 #### Operações
@@ -2963,7 +2989,7 @@ As funções são objetos que podemos usar e criar para automatizar tarefas repe
 ```
 
 ```
-[1] "Fri Oct 14 12:38:04 2016"
+[1] "Fri Oct 28 16:58:30 2016"
 ```
 
 Nas funções que têm argumentos, os mesmos têm nomes, posições específicas e opcionalmente, valores predefinidos. Tomando a função `seq` como exemplo, a página de ajuda mostra-nós que existem os seguintes argumentos:

@@ -563,6 +563,14 @@ sum(vacinados)
 cumsum(vacinados)
 ```
 
+A função `t` transpõe uma matriz (as linhas viram colunas e as colunas viram linhas).
+
+```{r}
+t(vacinados)
+```
+
+
+
 Outras funções operam dentro das colunas ou dentro das linhas.
 
 ```{r}
@@ -993,14 +1001,16 @@ trat_fat
 O reposicionamento dos elementos não afeta a posição dos níveis
 
 ```{r}
-trat_fat
+levels(trat_fat)
 (trat_fat <- trat_fat[4:1])
+levels(trat_fat)
 ```
 
 e o reposicionamento dos níveis não afeta nem a posição dos elementos, nem a ordem dos níveis.
 
 ```{r}
-(levels(trat_fat) <- levels(trat_fat)[4:1])
+trat_fat
+trat_fat <- factor(trat_fat, levels = levels(trat_fat)[4:1])
 trat_fat
 ```
 
