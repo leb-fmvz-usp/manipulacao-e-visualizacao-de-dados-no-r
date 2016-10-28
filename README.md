@@ -3,7 +3,7 @@
 <br>
 Contato: <baquero@usp.br>
 <br>
-Última revisão: 17 de outubro de 2016  
+Última revisão: 28 de outubro de 2016  
 Em caso de não estar lendo a versão online, está versão pode estar desatualizada.  
 Clique [aqui](https://www.gitbook.com/book/oswaldosantos/manipulacao-e-visualizacao-de-dados-no-r/welcome) para acessar a página do livro.
 <br><br><br><br>
