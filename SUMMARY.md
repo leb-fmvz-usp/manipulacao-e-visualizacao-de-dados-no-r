@@ -12,4 +12,4 @@
 * [Estruturas de controle](07-estruturas-de-controle.md)
 * [Estruturação de bancos de dados](08-estruturacao-de-bancos-de-dados.md)
 * [Operações em banco de dados](09-operacoes-em-bancos-de-dados.md)
-* [Protocolo de exploração de banncos de dados](10-protocolo-de-exploracao-de-dados.md)
+* [Protocolo de exploração de bancos de dados](10-protocolo-de-exploracao-de-dados.md)
