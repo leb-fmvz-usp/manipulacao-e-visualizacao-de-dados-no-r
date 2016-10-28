@@ -1086,7 +1086,7 @@ Nas funções que têm argumentos, os mesmos têm nomes, posições específicas
 <br>
 <table>
 <thead>
-<tr class='header'>
+<tr>
 <th align='left'> Argumento </th>
 <th align='left'> Descrição </th>
 <th align='left'> Valor predefinido </th>
