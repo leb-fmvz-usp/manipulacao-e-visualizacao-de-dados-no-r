@@ -3,12 +3,12 @@
 <br>
 Contato: <baquero@usp.br>
 <br>
-Última revisão: 1 de novembro de 2016  
+Última revisão: 17 de novembro de 2016  
 Em caso de não estar lendo a versão online, está versão pode estar desatualizada.  
 Clique [aqui](https://www.gitbook.com/book/oswaldosantos/manipulacao-e-visualizacao-de-dados-no-r/welcome) para acessar a página do livro.
 <br><br><br><br>
 
-A preparação de dados facilmente compreende 80% do processo de análise de dados (Dasu e Johnson, 2003) e a exploração de dados é um mecanismo que facilita a detecção de erros e a verificação de pressupostos para aplicar métodos de análise. A manipulação e visualização de dados constituem o ferramental da preparação e a exploração, e devido a sua importância, existem pesquisadores que trabalham especificamente no desenvolvimento dessas ferramentas.  
+A preparação de dados facilmente compreende 80% do processo de análise de dados (Dasu e Johnson, 2003) e a exploração de dados é um mecanismo que facilita a detecção de erros e a verificação de pressupostos para aplicar métodos de análise. Por outro lado, o domínio de técnicas de manipulação e visualização de dados traz ganhos na qualidade, produtividade e reproduzibilidade das análises de dados.  
 
 O R é uma linguagem de programação especializada na comunicação de instruções para a manipulação, cálculo e visualização de dados. O objetivo deste livro é apresentar os fundamentos de programação no R, sob o ponto de vista da manipulação e visualização de dados. Embora a teoria estatística não faça parte do conteúdo, alguns capítulos valem-se de métodos estatísticos para poder abordar aspectos de preparação e exploração de dados.  
 
