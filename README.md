@@ -5,7 +5,7 @@ Contato: <baquero@usp.br>
 <br>
 Última revisão: 17 de novembro de 2016  
 Em caso de não estar lendo a versão online, está versão pode estar desatualizada.  
-Clique [aqui](https://www.gitbook.com/book/oswaldosantos/manipulacao-e-visualizacao-de-dados-no-r/welcome) para acessar a página do livro.
+Clique [aqui]https://www.gitbook.com/book/leb-fmvz-usp/manipulacao-e-visualizacao-de-dados-no-r/details) para acessar a página do livro.
 <br><br><br><br>
 
 A preparação de dados facilmente compreende 80% do processo de análise de dados (Dasu e Johnson, 2003) e a exploração de dados é um mecanismo que facilita a detecção de erros e a verificação de pressupostos para aplicar métodos de análise. Por outro lado, o domínio de técnicas de manipulação e visualização de dados traz ganhos na qualidade, produtividade e reproduzibilidade das análises de dados.  
