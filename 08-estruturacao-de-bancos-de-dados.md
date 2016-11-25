@@ -4,7 +4,7 @@
 
 Um conjunto de dados pode ser estruturado de várias formas, e com frequência uma dada estrutura é mais conveniente para determinados propósitos. Nas análises estatísticas, a estrutura mais comum organiza os dados de tal forma que cada observação é uma linha e cada variável é uma coluna. Essa estrutura é conhecida como *tidy* em inglês e aqui usaremos a tradução *arrumada*. Entretanto, a coleta dos dados as vezes é mais simples usando outras estruturas e os bancos de fontes secundárias nem sempre são disponibilizados na estrutura arrumada.  
 
-O pacote `tydir` possui funções específicas para mudar a estrutura dos bancos de dados, e neste capítulo, seguindo a própria documentação do pacote, veremos como obter uma estrutura arrumada a partir de bancos nos quais:
+O pacote `tidyr` possui funções específicas para mudar a estrutura dos bancos de dados, e neste capítulo, seguindo a própria documentação do pacote, veremos como obter uma estrutura arrumada a partir de bancos nos quais:
 
 * Os nomes de colunas são valores de uma variável, não variáveis em si.
 * Mais de uma variável está contida em uma coluna só.
@@ -64,7 +64,7 @@ Se os nomes das colunas `rural` e `urbano` são valores da variável *tipo de re
 20     j urbano       618
 ```
 
-Com a função `gather` do `tydir` podemos transformar a primeira estrutura na segunda especificando o banco, o nome de duas colunas *chave* e *valor*, e as colunas que não são variáveis.
+Com a função `gather` do `tidyr` podemos transformar a primeira estrutura na segunda especificando o banco, o nome de duas colunas *chave* e *valor*, e as colunas que não são variáveis.
 
 
 ```r
@@ -105,7 +105,7 @@ No lugar de especificar as colunas que não são variáveis, outra opção consi
 > caes_vacinados <- gather(caes_vacinados, tipo, vacinados, -setor)
 ```
 
-Reparem que os nomes das colunas não estão contidos em aspas. No capítulo *Objetos* vimos que para selecionar colunas de um data frame tínhamos que usar um vetor com as posições das colunas ou com os nomes entre aspas. O `tydir` é mais flexível na hora de selecionar colunas. Vejamos alguns exemplos com o seguinte conjunto de dados que tem 15 observações e 5 variáveis (`setor`, `tipo`, `ano`, `vacinados`), e uma estrutura não arrumada.
+Reparem que os nomes das colunas não estão contidos em aspas. No capítulo *Objetos* vimos que para selecionar colunas de um data frame tínhamos que usar um vetor com as posições das colunas ou com os nomes entre aspas. O `tidyr` é mais flexível na hora de selecionar colunas. Vejamos alguns exemplos com o seguinte conjunto de dados que tem 15 observações e 5 variáveis (`setor`, `tipo`, `ano`, `vacinados`), e uma estrutura não arrumada.
 
 
 ```r
