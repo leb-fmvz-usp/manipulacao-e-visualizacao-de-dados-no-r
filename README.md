@@ -3,7 +3,7 @@
 <br>
 Contato: <baquero@usp.br>
 <br>
-Última revisão: 17 de novembro de 2016  
+Última revisão: 25 de novembro de 2016  
 Em caso de não estar lendo a versão online, está versão pode estar desatualizada.  
 Clique [aqui](https://www.gitbook.com/book/leb-fmvz-usp/manipulacao-e-visualizacao-de-dados-no-r/details) para acessar a página do livro.
 <br><br><br><br>
@@ -19,3 +19,4 @@ Após a apropriação dos conhecimentos apresentados neste livro, os leitores te
 * R versão 3.3.1 ou superior
 * RStudio Desktop 0.99.902 ou superior
 * Material suplementar do artigo *Zuur, Alain F., Elena N. Ieno, and Chris S. Elphick. "A protocol for data exploration to avoid common statistical problems." Methods in Ecology and Evolution 1.1 (2010): 3-14.*
+* No capítulo de importação e exportação de arquivos são necessários os "domicilios.csv" e "dom.csv". Esses arquivos estão disponíveis repositório do livro: [https://github.com/leb-fmvz-usp/manipulacao-e-visualizacao-de-dados-no-r](https://github.com/leb-fmvz-usp/manipulacao-e-visualizacao-de-dados-no-r). Para opté-los há que baixar o repositório (botão verde "Clone or download"), descompactar a pasta, e entrar na pasta "rmds".
