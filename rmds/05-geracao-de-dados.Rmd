@@ -192,7 +192,7 @@ Reparem que os resultados da função `sample` são iguais aos resultados da fun
 
 #### Distribuição normal
 
-A distribuição normal é caracterizada por dois parâmetros que são a média e o desvio padrão. Para uma amostra com base em uma distribuição normal com média 100 e desvio padrão 10, o valor mais provável será 100, e a probabilidade será menor quanto mais distante seja um valor da média (a variação das probabilidades é dado graficamente pela famosa campana de Gauss, cujo pico coincide com a média).  
+A distribuição normal é caracterizada por dois parâmetros que são a média e o desvio padrão. Para uma amostra com base em uma distribuição normal com média 100 e desvio padrão 10, o valor mais provável será 100, e a probabilidade será menor quanto mais distante seja um valor da média (graficamente, a variação das probabilidades corresponde à famosa campana de Gauss, cujo pico coincide com a média).  
 
 Supondo que o peso dos animais de uma dada população segue uma distribuição normal com média (`mean`) 100 e desvio padrão (`sd`) 10, podemos sortear 20 pesos dessa população com a função `rnorm`. 
 
@@ -223,7 +223,7 @@ rpois(n = 20, lambda = .88)
 
 #### Distribuição binomial
 
-A distribuição binomial é caracterizada pelos parâmetros *size* e *p*, sendo *size* uma sequência independente de experimentos de Bernoulli. Nesses experimentos os possíveis resultados são sucesso ou fracasso, e os sucessos ocorrem com probabilidade *p*. A independência da sequência implica que o resultado de um experimento não está condicionado pelo resultado de outros experimentos. Com a função `rbinom` podemos especificar esses parâmetros, assim como o tamanho da amostra `n` (a literatura estatística costuma usar a letra *n* para referir-se ao primeiro parâmetro mencionado, porém, na função `rbinom`, `n` representa o tamanho da amostra e `size` é o número de experimentos).  
+A distribuição binomial é caracterizada pelos parâmetros *size* e *p*, sendo *size* uma sequência de experimentos de Bernoulli independentes. Nesses experimentos os possíveis resultados são sucesso ou fracasso, e os sucessos ocorrem com probabilidade *p*. A independência implica que o resultado de um experimento não está condicionado pelo resultado de outros experimentos. Com a função `rbinom` podemos especificar esses parâmetros, assim como o tamanho da amostra `n` (a literatura estatística costuma usar a letra *n* para referir-se ao número de experimentos de Bernoulli, porém, na função `rbinom`, `n` representa o tamanho da amostra e `size` é o número de experimentos).  
 
 Se a soroprevalência de uma dada doença é de 15%, podemos criar 10 grupos hipotéticos cada um com 100 animais testados, e a cada grupo atribuir um número animais positivos de acordo com a distribuição binomial correspondente.
 

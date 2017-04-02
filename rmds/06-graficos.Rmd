@@ -50,7 +50,7 @@ plot(casos$notificados, casos$confirmados)
 Por que usar a função `ggplot` se a função `plot` é muito mais simples? Porque é comum criar gráficos com mais informações (legendas, relações multivariadas, etc.) e nesses casos a função `ggplot` é mais versátil e fácil de usar. Por exemplo, para representar o sexo com cores diferentes e criar a legeneda correspondente, só precisamos mapear a variável `sexo` na propriedade estética `color`.
 
 ```{r 06-04}
-ggplot(data = casos, aes(notificados, confirmados)) +
+ggplot(data = casos, aes(notificados, confirmados, color = sexo)) +
   geom_point()
 ```
 

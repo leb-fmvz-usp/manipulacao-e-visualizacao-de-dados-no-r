@@ -51,6 +51,14 @@ A partir do banco `casos` podemos graficar a relação entre o número de casos 
 
 ```r
 > library(ggplot2)
+```
+
+```
+Find out what's changed in ggplot2 at
+http://github.com/tidyverse/ggplot2/releases.
+```
+
+```r
 > ggplot(data = casos, mapping = aes(x = notificados, y = confirmados))
 ```
 
@@ -79,7 +87,7 @@ Por que usar a função `ggplot` se a função `plot` é muito mais simples? Por
 
 
 ```r
-> ggplot(data = casos, aes(notificados, confirmados)) +
+> ggplot(data = casos, aes(notificados, confirmados, color = sexo)) +
 +   geom_point()
 ```
 

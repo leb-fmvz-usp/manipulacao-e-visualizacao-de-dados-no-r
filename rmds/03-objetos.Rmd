@@ -1006,7 +1006,7 @@ levels(trat_fat)
 levels(trat_fat)
 ```
 
-e o reposicionamento dos níveis não afeta nem a posição dos elementos, nem a ordem dos níveis.
+e o reposicionamento dos níveis não afeta nem a posição dos elementos.
 
 ```{r}
 trat_fat
