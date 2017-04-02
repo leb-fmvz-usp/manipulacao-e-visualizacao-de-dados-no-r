@@ -3,7 +3,7 @@
 <br>
 Contato: <baquero@usp.br>
 <br>
-Última revisão: 25 de novembro de 2016  
+Última revisão: 2 de abril de 2017  
 Em caso de não estar lendo a versão online, está versão pode estar desatualizada.  
 Clique [aqui](https://www.gitbook.com/book/leb-fmvz-usp/manipulacao-e-visualizacao-de-dados-no-r/details) para acessar a página do livro.
 <br><br><br><br>
