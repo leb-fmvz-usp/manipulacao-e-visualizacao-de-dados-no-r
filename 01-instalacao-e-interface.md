@@ -64,9 +64,6 @@ Os dois comandos anteriores criaram dois objetos e todos os objetos são listado
 
 ![](interface/rstudio10.png)  
 
-Daqui para frente, o conteúdo de quadros cinza como o que está abaixo são os comandos executados, e os resultados da execução aparecerão em seguida precedidos por `##` ou serão gráficos.  
-
-
 ```r
 > x <- 1:10
 > y <- 11:20
