@@ -55,7 +55,7 @@ A partir do banco `casos` podemos graficar a relação entre o número de casos 
 
 ```
 Find out what's changed in ggplot2 at
-http://github.com/tidyverse/ggplot2/releases.
+https://github.com/tidyverse/ggplot2/releases.
 ```
 
 ```r

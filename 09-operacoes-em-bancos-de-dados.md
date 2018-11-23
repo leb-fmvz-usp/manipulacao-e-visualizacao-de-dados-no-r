@@ -60,7 +60,7 @@ Reparem que com as funções do `dplyr` os nomes das colunas não estão contido
 
 
 ```r
-> library(dplyr)
+> library(tidyverse)
 > filter(domicilios, caes > 1)
 ```
 
@@ -1147,12 +1147,12 @@ Por exemplo, podemos particionar o banco `domicilios` com base na coluna `munici
 ```
 
 ```
-# A tibble: 3 × 3
+# A tibble: 3 x 3
   municipio media_caes total_gatos
-      <chr>      <dbl>       <int>
-1        a1        0.6           3
-2         b        1.1           3
-3         c        0.8           7
+  <chr>          <dbl>       <int>
+1 a1               0.6           3
+2 b                1.1           3
+3 c                0.8           7
 ```
 
 Quando aplicamos a função `group_by`, a maioria das funções subsequentes são aplicadas dentro de cada grupo. Portanto, se particionamos, depois amostramos e finalmente sumarizamos, o banco resultante terá tantas linhas como grupos, como no caso anterior.
@@ -1166,12 +1166,12 @@ Quando aplicamos a função `group_by`, a maioria das funções subsequentes sã
 ```
 
 ```
-# A tibble: 3 × 3
+# A tibble: 3 x 3
   municipio media_caes media_gatos
-      <chr>      <dbl>       <dbl>
-1        a1        0.8         0.0
-2         b        1.4         0.2
-3         c        0.8         0.0
+  <chr>          <dbl>       <dbl>
+1 a1               0.8         0  
+2 b                1.4         0.2
+3 c                0.8         0  
 ```
 
 Em ocasiões é necessário aplicar funções separadamente nas partições, para depois aplicar funções no total de observações. Nesses casos devemos desagrupar o banco com `ungroup` antes de aplicar as funções no total das observações.
@@ -1186,10 +1186,10 @@ Em ocasiões é necessário aplicar funções separadamente nas partições, par
 ```
 
 ```
-# A tibble: 1 × 2
+# A tibble: 1 x 2
   media_caes media_gatos
        <dbl>       <dbl>
-1  0.8666667   0.2666667
+1      0.867       0.267
 ```
 
 A função `group_by` atribui novas *classes* ao objeto resultante e uma das consequências disso é que o padrão de apresentação do data frame resultante é diferente: o tipo de cada coluna aparece abaixo do nome (`<chr>`: caractere, `<int>`: inteiro, etc.) e só as 10 primeiras linhas são mostradas. Para obtermos a apresentação padrão dos data frames, devemos coercionar para essa estrutura.
@@ -1202,21 +1202,20 @@ A função `group_by` atribui novas *classes* ao objeto resultante e uma das con
 ```
 
 ```
-Source: local data frame [30 x 5]
-Groups: municipio [3]
-
+# A tibble: 30 x 5
+# Groups:   municipio [3]
    municipio    id  caes gatos prop_caes
-       <chr> <int> <int> <int>     <dbl>
-1         a1     1     0     0 0.0000000
-2         a1     3     0     0 0.0000000
-3         a1     2     2     0 0.3333333
-4         a1     4     0     0 0.0000000
-5         a1     5     1     0 0.1666667
-6         a1     6     1     0 0.1666667
-7         a1     7     0     2 0.0000000
-8         a1     8     0     0 0.0000000
-9         a1     9     1     1 0.1666667
-10        a1    10     1     0 0.1666667
+   <chr>     <int> <int> <int>     <dbl>
+ 1 a1            1     0     0     0    
+ 2 a1            3     0     0     0    
+ 3 a1            2     2     0     0.333
+ 4 a1            4     0     0     0    
+ 5 a1            5     1     0     0.167
+ 6 a1            6     1     0     0.167
+ 7 a1            7     0     2     0    
+ 8 a1            8     0     0     0    
+ 9 a1            9     1     1     0.167
+10 a1           10     1     0     0.167
 # ... with 20 more rows
 ```
 
@@ -1281,21 +1280,20 @@ Se queremos ajustar uma regressão linear dentro de cada grupo, as funções do 
 ```
 
 ```
-Source: local data frame [60 x 3]
-Groups: grupo [10]
-
-   grupo         y        x
-   <int>     <dbl>    <dbl>
-1      1  5.420216 52.16755
-2      1 10.630271 44.57507
-3      1  7.782182 58.91145
-4      1 27.625572 55.95981
-5      1 24.054606 66.35618
-6      1 23.233784 56.89275
-7      2  9.477180 43.36257
-8      2 24.875976 43.76274
-9      2 35.672370 49.20368
-10     2  7.730713 54.35625
+# A tibble: 60 x 3
+# Groups:   grupo [10]
+   grupo     y     x
+   <int> <dbl> <dbl>
+ 1     1  5.42  52.2
+ 2     1 10.6   44.6
+ 3     1  7.78  58.9
+ 4     1 27.6   56.0
+ 5     1 24.1   66.4
+ 6     1 23.2   56.9
+ 7     2  9.48  43.4
+ 8     2 24.9   43.8
+ 9     2 35.7   49.2
+10     2  7.73  54.4
 # ... with 50 more rows
 ```
 
@@ -1316,19 +1314,18 @@ Adding missing grouping variables: `grupo`
 ```
 
 ```
-Source: local data frame [10 x 3]
-Groups: grupo [10]
-
-   grupo adj.r.squared      p.value
-   <int>         <dbl>        <dbl>
-1      1    0.30580219 1.863413e-05
-2      2    0.13891126 4.463162e-03
-3      3    0.27526672 5.469821e-05
-4      4    0.19286524 8.358439e-04
-5      5    0.13704449 4.724054e-03
-6      6    0.14038104 4.267737e-03
-7      7    0.05742603 5.158791e-02
-8      8    0.04843200 6.770084e-02
-9      9    0.06243191 4.437932e-02
-10    10    0.11335589 9.666115e-03
+# A tibble: 10 x 3
+# Groups:   grupo [10]
+   grupo adj.r.squared   p.value
+   <int>         <dbl>     <dbl>
+ 1     1        0.306  0.0000186
+ 2     2        0.139  0.00446  
+ 3     3        0.275  0.0000547
+ 4     4        0.193  0.000836 
+ 5     5        0.137  0.00472  
+ 6     6        0.140  0.00427  
+ 7     7        0.0574 0.0516   
+ 8     8        0.0484 0.0677   
+ 9     9        0.0624 0.0444   
+10    10        0.113  0.00967  
 ```

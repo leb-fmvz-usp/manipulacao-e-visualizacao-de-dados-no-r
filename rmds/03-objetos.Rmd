@@ -23,7 +23,20 @@ typeof(TRUE)
 typeof(FALSE)
 ```
 
-Os objetos além de serem de um determinado tipo, possuem uma estrutura especifica determinada pelo número de dimensões, e pela homegeneidade do conteúdo em relação ao tipo dos seus elementos.  
+Os objetos além de serem de um determinado tipo, possuem um modo, uma classe, e uma estrutura especifica determinada pelo número de dimensões, e pela homegeneidade do conteúdo em relação ao tipo dos seus elementos.
+
+O modo também se refere ao armazenamento dos dados e é praticamente equivalente ao tipo. A função `mode` mostra o modo dos objetos.
+
+A classe é uma propriedade dos objetos que determina o compartamento das funções aplicadas aos mesmos. Se criarmos um vetor (ver próxima secção) com dois números e outro com duas letras, as suas classes serão diferentes como mostrado pela função `class`, e algumas funções como `summary` terão um comportamento diferente para cada tipo.
+
+```{r}
+c(1, 2)
+c("a", "b")
+class(c(1, 2))
+class(c("a", "b"))
+summary(c(1, 2))
+summary(c("a", "b"))
+```
 
 <br>
 Estruturas de objetos segundo o número de dimensões e a homogeneidade dos seus elementos (adaptado de [Wickham, 2014](http://adv-r.had.co.nz/Data-structures.html)).  
@@ -724,6 +737,114 @@ as.matrix(banco)
 
 Para cada coluna, mesmo princípio das operações em vetores. As funções `all.equal` e `identical` permitem comparar data frames.
 
+### tibble
+
+Os tibble são data frames com algumas particularidades. Por exemplo, quando um tibble é criado, as colunas de caracteres não são convertidas em fatores. Para criar um tibble é necessário carregar o pacote `dplyr`.
+
+#### Criação
+
+A criação de um `tibble` é semelhante à de um data frame.
+
+```{r}
+library(dplyr)
+(banco <- tibble(cidade = c('a', 'b', 'c', 'd'),
+                     populacao = c(1500, 3300, 2000, 4500),
+                     casos = c(133, 37, 76, 503),
+                     vigilancia = c('nao', 'sim', 'sim', 'nao')))
+```
+
+Quando um tibble é impresso, suas dimensões são indicadas (`banco` tem 4 linhas e 4 colunas), assim como o tipo de cada coluna embaixo do nome das mesmas. Outra diferença na impresão é que o tibble só mostra as 20 primeiras linhas e indica no final da impressão o número de linhas que não foram impressas.
+
+```{r}
+(ban_df <- data.frame(dia = 1:30))
+(ban_tb <- tibble(dia = 1:30))
+```
+
+Se o total de colunas não cabe na largura da consola, a impressão do tibble só mostra as primeiras colunas e indica no final quais não foram impressas. O tibble também abrevia nomes de colunas compridos quando a limitação de espaço na consola.
+
+```{r}
+(ban_df <- data.frame(nome_da_priemira_coluna = 1:25,
+                      nome_da_segunda_coluna = 1:25,
+                      nome_da_terceira_coluna = 1:25,
+                      nome_da_quarta_coluna = 1:25,
+                      nome_da_quinta_coluna = 1:25,
+                      nome_da_sexta_coluna = 1:25,
+                      nome_da_oitava_coluna = 1:25))
+(ban_tb <- tibble(nome_da_priemira_coluna = 1:25,
+                  nome_da_segunda_coluna = 1:25,
+                  nome_da_terceira_coluna = 1:25,
+                  nome_da_quarta_coluna = 1:25,
+                  nome_da_quinta_coluna = 1:25,
+                  nome_da_sexta_coluna = 1:25,
+                  nome_da_oitava_coluna = 1:25))
+```
+
+Os padrões de impressão dos tibble são convenientes para inspecionar rapidamente bancos com bastantes dados, mas quando se precisa inspeccionar além desses padrões, ha várias possibilidades. Uma é usar indexar apenas o conteudo de interesse.
+
+```{r}
+ban_tb[18:22, 1:2]
+```
+
+Outra opção é indicar o número de linhas que devem ser impressas no argumento `n` da função `print`.
+
+```{r}
+ban_tb <- tibble(dia = 1:30)
+print(ban_tb, n = 30)
+```
+
+Para visualizar o banco completo, seja um tibble, um data frame ou uma matriz, a função `View` mostra o conteúdo em formato de planilha.
+
+```{r}
+View(ban_tb)
+```
+
+Outra diferença dos tibble é que a recilcagem só funciona com colunas que têm um elemento. Nos data frame a reciclagem é possível sempre que o comprimento da coluna menor seja múltiplo da coluna maior.
+
+```{r}
+data.frame(a = 1:6, b = 1:2)
+tibble(a = 1:6, b = 1:2)
+tibble(a = 1:6, b = 1)
+```
+
+#### Atributos e estrutura
+
+Os tibble também são data frames e portanto são de classe `data.frame`; as funções que servem nos data frames também servem nos tibble. No entanto, os tibble poussem duas classes adicionais (`tbl_df` e `tbl`) que lhes conferem um comportamento diferenciado.
+
+```{r}
+attributes(banco)
+```
+
+```{r}
+str(banco)
+```
+
+#### Indexação
+
+A única diferença em relação aos data frame é na indexação de uma única coluna. Se o indexador é `[`, o resultado é um tibble, se o indexador é `$` ou `[[`, retorna um vetor.
+
+```{r}
+ban_df <- data.frame(a = 1:3, b = 4:6)
+ban_tb <- tibble(a = 1:3, b = 4:6)
+ban_df[, "a"]
+ban_tb[, "a"]
+ban_df$a
+ban_tb$b
+ban_df[["a"]]
+ban_tb[["a"]]
+```
+
+#### Susbstituição, reposicionamento, eliminação e combinação
+
+Como nos data frame
+
+#### Coerção
+
+Mesmo princípio da coerção de e para data frames. Na coerção para tibbles deve se usar a função `as_tibble`.
+
+```{r}
+as_tibble(ban_df)
+```
+
 ### Lista
 
 A lista é a estrutura mais flexível quanto à heterogeneidade do seu conteúdo, pois seus próprios elementos são listas que podem conter objetos com qualquer uma das estruturas vistas, inclusive outras listas.
@@ -743,10 +864,10 @@ attributes(lista)
 str(lista)
 ```
 
-No exemplo acima, cada um dos três cifrões à esquerda está associado, respectivamente, a um dos elementos de `lista`. Aproveitando a semelhança entre gavetas e os elementos de uma lista, designemos os elementos a três nomes.
+No exemplo acima, cada um dos três cifrões à esquerda está associado, respectivamente, a um dos elementos de `lista`. Aproveitando a semelhança entre caixas e os elementos de uma lista, designemos os elementos a três nomes.
 
 ```{r}
-names(lista) <- c('gaveta1', 'gaveta2', 'gaveta3')
+names(lista) <- c('caixa1', 'caixa2', 'caixa3')
 lista
 str(lista)
 attributes(lista)
@@ -763,38 +884,38 @@ length(lista)
 Criemos outra lista mais complexa para ver alguns exemplos.
 
 ```{r}
-(gaveta <- list('g1',
-                gaveta2 = 'g2',
-                gaveta3 = list('g3a', 'g3b', gaveta3c = 'g3c')))
+(caixa <- list('g1',
+                caixa2 = 'g2',
+                caixa3 = list('g3a', 'g3b', caixa3c = 'g3c')))
 ```
 
 A indexação com corchetes simples retorna cada um dos elementos selecionados dentro de uma lista. A indexação com corchetes duplos ou com o cifrão retorna o objeto sem contê-lo em uma lista, mas sõ permite indexar 1 elemento.
 
 ```{r}, error=TRUE}
-gaveta[1]
-gaveta[[1]]
-gaveta[2]
-gaveta[[2]]
-gaveta[3]
-gaveta[[3]]
-gaveta[['gaveta']]
-gaveta$gaveta3
-gaveta[1:2]
-gaveta[[1:2]]
+caixa[1]
+caixa[[1]]
+caixa[2]
+caixa[[2]]
+caixa[3]
+caixa[[3]]
+caixa[['caixa']]
+caixa$caixa3
+caixa[1:2]
+caixa[[1:2]]
 ```
 
 A indexação não está restrita ao primeiro nível hierárquico da estrutura
 
 ```{r}
-gaveta$gaveta3[[2]]
-gaveta$gaveta3$gaveta3c
+caixa$caixa3[[2]]
+caixa$caixa3$caixa3c
 ```
 
 e os objetos contidos também podem ser indexados
 
 ```{r}
-lista$gaveta3
-lista$gaveta3[1:2, 2:4]
+lista$caixa3
+lista$caixa3[1:2, 2:4]
 ```
 
 Tendo visto a forma de indexar listas, podemos entender melhor o resultado da função `str` aplicada ao objeto `vacinados`.
@@ -819,20 +940,20 @@ attr(vacinados, 'dimnames')$grupo
 Os elementos indexados podem ser substituidos por qualquer valor.
 
 ```{r}
-gaveta[1:2] <- c(100, 200)
-gaveta
+caixa[1:2] <- c(100, 200)
+caixa
 ```
 
 #### Reposicionamento
 
 ```{r}
-gaveta[c(3, 1, 2)]
+caixa[c(3, 1, 2)]
 ```
 
 #### Eliminação
 
 ```{r}
-gaveta[-3]
+caixa[-3]
 ```
 
 #### Combinação
@@ -946,7 +1067,7 @@ Se a intensidade do tratamento "c" é menor do que a do "b" e esta menor do que 
 
 #### Atributos e estrutura
 
-O atributo `level` mostra as diferentes categorias. O argumento `class` especifica a classe do objeto e se o mesmo é ordenado.
+O atributo `level` mostra as diferentes categorias. O atributo `class` especifica a classe do objeto e se o mesmo é ordenado.
 
 ```{r}
 attributes(trat_fat)

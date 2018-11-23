@@ -65,7 +65,62 @@ No terceiro exemplo a seguir, o objeto é tipo *double*, apesar de não ter uma 
 [1] "logical"
 ```
 
-Os objetos além de serem de um determinado tipo, possuem uma estrutura especifica determinada pelo número de dimensões, e pela homegeneidade do conteúdo em relação ao tipo dos seus elementos.  
+Os objetos além de serem de um determinado tipo, possuem um modo, uma classe, e uma estrutura especifica determinada pelo número de dimensões, e pela homegeneidade do conteúdo em relação ao tipo dos seus elementos.
+
+O modo também se refere ao armazenamento dos dados e é praticamente equivalente ao tipo. A função `mode` mostra o modo dos objetos.
+
+A classe é uma propriedade dos objetos que determina o compartamento das funções aplicadas aos mesmos. Se criarmos um vetor (ver próxima secção) com dois números e outro com duas letras, as suas classes serão diferentes como mostrado pela função `class`, e algumas funções como `summary` terão um comportamento diferente para cada tipo.
+
+
+```r
+> c(1, 2)
+```
+
+```
+[1] 1 2
+```
+
+```r
+> c("a", "b")
+```
+
+```
+[1] "a" "b"
+```
+
+```r
+> class(c(1, 2))
+```
+
+```
+[1] "numeric"
+```
+
+```r
+> class(c("a", "b"))
+```
+
+```
+[1] "character"
+```
+
+```r
+> summary(c(1, 2))
+```
+
+```
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+   1.00    1.25    1.50    1.50    1.75    2.00 
+```
+
+```r
+> summary(c("a", "b"))
+```
+
+```
+   Length     Class      Mode 
+        2 character character 
+```
 
 <br>
 Estruturas de objetos segundo o número de dimensões e a homogeneidade dos seus elementos (adaptado de [Wickham, 2014](http://adv-r.had.co.nz/Data-structures.html)).  
@@ -1905,6 +1960,490 @@ A coerção de um data frame para uma matriz, muda tanto a estrutura como o tipo
 
 Para cada coluna, mesmo princípio das operações em vetores. As funções `all.equal` e `identical` permitem comparar data frames.
 
+### tibble
+
+Os tibble são data frames com algumas particularidades. Por exemplo, quando um tibble é criado, as colunas de caracteres não são convertidas em fatores. Para criar um tibble é necessário carregar o pacote `dplyr`.
+
+#### Criação
+
+A criação de um `tibble` é semelhante à de um data frame.
+
+
+```r
+> library(dplyr)
+```
+
+```
+
+Attaching package: 'dplyr'
+```
+
+```
+The following objects are masked from 'package:stats':
+
+    filter, lag
+```
+
+```
+The following objects are masked from 'package:base':
+
+    intersect, setdiff, setequal, union
+```
+
+```r
+> (banco <- tibble(cidade = c('a', 'b', 'c', 'd'),
++                      populacao = c(1500, 3300, 2000, 4500),
++                      casos = c(133, 37, 76, 503),
++                      vigilancia = c('nao', 'sim', 'sim', 'nao')))
+```
+
+```
+# A tibble: 4 x 4
+  cidade populacao casos vigilancia
+  <chr>      <dbl> <dbl> <chr>     
+1 a           1500   133 nao       
+2 b           3300    37 sim       
+3 c           2000    76 sim       
+4 d           4500   503 nao       
+```
+
+Quando um tibble é impresso, suas dimensões são indicadas (`banco` tem 4 linhas e 4 colunas), assim como o tipo de cada coluna embaixo do nome das mesmas. Outra diferença na impresão é que o tibble só mostra as 20 primeiras linhas e indica no final da impressão o número de linhas que não foram impressas.
+
+
+```r
+> (ban_df <- data.frame(dia = 1:30))
+```
+
+```
+   dia
+1    1
+2    2
+3    3
+4    4
+5    5
+6    6
+7    7
+8    8
+9    9
+10  10
+11  11
+12  12
+13  13
+14  14
+15  15
+16  16
+17  17
+18  18
+19  19
+20  20
+21  21
+22  22
+23  23
+24  24
+25  25
+26  26
+27  27
+28  28
+29  29
+30  30
+```
+
+```r
+> (ban_tb <- tibble(dia = 1:30))
+```
+
+```
+# A tibble: 30 x 1
+     dia
+   <int>
+ 1     1
+ 2     2
+ 3     3
+ 4     4
+ 5     5
+ 6     6
+ 7     7
+ 8     8
+ 9     9
+10    10
+# ... with 20 more rows
+```
+
+Se o total de colunas não cabe na largura da consola, a impressão do tibble só mostra as primeiras colunas e indica no final quais não foram impressas. O tibble também abrevia nomes de colunas compridos quando a limitação de espaço na consola.
+
+
+```r
+> (ban_df <- data.frame(nome_da_priemira_coluna = 1:25,
++                       nome_da_segunda_coluna = 1:25,
++                       nome_da_terceira_coluna = 1:25,
++                       nome_da_quarta_coluna = 1:25,
++                       nome_da_quinta_coluna = 1:25,
++                       nome_da_sexta_coluna = 1:25,
++                       nome_da_oitava_coluna = 1:25))
+```
+
+```
+   nome_da_priemira_coluna nome_da_segunda_coluna
+1                        1                      1
+2                        2                      2
+3                        3                      3
+4                        4                      4
+5                        5                      5
+6                        6                      6
+7                        7                      7
+8                        8                      8
+9                        9                      9
+10                      10                     10
+11                      11                     11
+12                      12                     12
+13                      13                     13
+14                      14                     14
+15                      15                     15
+16                      16                     16
+17                      17                     17
+18                      18                     18
+19                      19                     19
+20                      20                     20
+21                      21                     21
+22                      22                     22
+23                      23                     23
+24                      24                     24
+25                      25                     25
+   nome_da_terceira_coluna nome_da_quarta_coluna
+1                        1                     1
+2                        2                     2
+3                        3                     3
+4                        4                     4
+5                        5                     5
+6                        6                     6
+7                        7                     7
+8                        8                     8
+9                        9                     9
+10                      10                    10
+11                      11                    11
+12                      12                    12
+13                      13                    13
+14                      14                    14
+15                      15                    15
+16                      16                    16
+17                      17                    17
+18                      18                    18
+19                      19                    19
+20                      20                    20
+21                      21                    21
+22                      22                    22
+23                      23                    23
+24                      24                    24
+25                      25                    25
+   nome_da_quinta_coluna nome_da_sexta_coluna
+1                      1                    1
+2                      2                    2
+3                      3                    3
+4                      4                    4
+5                      5                    5
+6                      6                    6
+7                      7                    7
+8                      8                    8
+9                      9                    9
+10                    10                   10
+11                    11                   11
+12                    12                   12
+13                    13                   13
+14                    14                   14
+15                    15                   15
+16                    16                   16
+17                    17                   17
+18                    18                   18
+19                    19                   19
+20                    20                   20
+21                    21                   21
+22                    22                   22
+23                    23                   23
+24                    24                   24
+25                    25                   25
+   nome_da_oitava_coluna
+1                      1
+2                      2
+3                      3
+4                      4
+5                      5
+6                      6
+7                      7
+8                      8
+9                      9
+10                    10
+11                    11
+12                    12
+13                    13
+14                    14
+15                    15
+16                    16
+17                    17
+18                    18
+19                    19
+20                    20
+21                    21
+22                    22
+23                    23
+24                    24
+25                    25
+```
+
+```r
+> (ban_tb <- tibble(nome_da_priemira_coluna = 1:25,
++                   nome_da_segunda_coluna = 1:25,
++                   nome_da_terceira_coluna = 1:25,
++                   nome_da_quarta_coluna = 1:25,
++                   nome_da_quinta_coluna = 1:25,
++                   nome_da_sexta_coluna = 1:25,
++                   nome_da_oitava_coluna = 1:25))
+```
+
+```
+# A tibble: 25 x 7
+   nome_da_priemira_col… nome_da_segunda_co… nome_da_terceira_co…
+                   <int>               <int>                <int>
+ 1                     1                   1                    1
+ 2                     2                   2                    2
+ 3                     3                   3                    3
+ 4                     4                   4                    4
+ 5                     5                   5                    5
+ 6                     6                   6                    6
+ 7                     7                   7                    7
+ 8                     8                   8                    8
+ 9                     9                   9                    9
+10                    10                  10                   10
+# ... with 15 more rows, and 4 more variables:
+#   nome_da_quarta_coluna <int>, nome_da_quinta_coluna <int>,
+#   nome_da_sexta_coluna <int>, nome_da_oitava_coluna <int>
+```
+
+Os padrões de impressão dos tibble são convenientes para inspecionar rapidamente bancos com bastantes dados, mas quando se precisa inspeccionar além desses padrões, ha várias possibilidades. Uma é usar indexar apenas o conteudo de interesse.
+
+
+```r
+> ban_tb[18:22, 1:2]
+```
+
+```
+# A tibble: 5 x 2
+  nome_da_priemira_coluna nome_da_segunda_coluna
+                    <int>                  <int>
+1                      18                     18
+2                      19                     19
+3                      20                     20
+4                      21                     21
+5                      22                     22
+```
+
+Outra opção é indicar o número de linhas que devem ser impressas no argumento `n` da função `print`.
+
+
+```r
+> ban_tb <- tibble(dia = 1:30)
+> print(ban_tb, n = 30)
+```
+
+```
+# A tibble: 30 x 1
+     dia
+   <int>
+ 1     1
+ 2     2
+ 3     3
+ 4     4
+ 5     5
+ 6     6
+ 7     7
+ 8     8
+ 9     9
+10    10
+11    11
+12    12
+13    13
+14    14
+15    15
+16    16
+17    17
+18    18
+19    19
+20    20
+21    21
+22    22
+23    23
+24    24
+25    25
+26    26
+27    27
+28    28
+29    29
+30    30
+```
+
+Para visualizar o banco completo, seja um tibble, um data frame ou uma matriz, a função `View` mostra o conteúdo em formato de planilha.
+
+
+```r
+> View(ban_tb)
+```
+
+Outra diferença dos tibble é que a recilcagem só funciona com colunas que têm um elemento. Nos data frame a reciclagem é possível sempre que o comprimento da coluna menor seja múltiplo da coluna maior.
+
+
+```r
+> data.frame(a = 1:6, b = 1:2)
+```
+
+```
+  a b
+1 1 1
+2 2 2
+3 3 1
+4 4 2
+5 5 1
+6 6 2
+```
+
+```r
+> tibble(a = 1:6, b = 1:2)
+```
+
+```
+Error: Column `b` must be length 1 or 6, not 2
+[90mCall `rlang::last_error()` to see a backtrace[39m
+```
+
+```r
+> tibble(a = 1:6, b = 1)
+```
+
+```
+# A tibble: 6 x 2
+      a     b
+  <int> <dbl>
+1     1     1
+2     2     1
+3     3     1
+4     4     1
+5     5     1
+6     6     1
+```
+
+#### Atributos e estrutura
+
+Os tibble também são data frames e portanto são de classe `data.frame`; as funções que servem nos data frames também servem nos tibble. No entanto, os tibble poussem duas classes adicionais (`tbl_df` e `tbl`) que lhes conferem um comportamento diferenciado.
+
+
+```r
+> attributes(banco)
+```
+
+```
+$names
+[1] "cidade"     "populacao"  "casos"      "vigilancia"
+
+$row.names
+[1] 1 2 3 4
+
+$class
+[1] "tbl_df"     "tbl"        "data.frame"
+```
+
+
+```r
+> str(banco)
+```
+
+```
+Classes 'tbl_df', 'tbl' and 'data.frame':	4 obs. of  4 variables:
+ $ cidade    : chr  "a" "b" "c" "d"
+ $ populacao : num  1500 3300 2000 4500
+ $ casos     : num  133 37 76 503
+ $ vigilancia: chr  "nao" "sim" "sim" "nao"
+```
+
+#### Indexação
+
+A única diferença em relação aos data frame é na indexação de uma única coluna. Se o indexador é `[`, o resultado é um tibble, se o indexador é `$` ou `[[`, retorna um vetor.
+
+
+```r
+> ban_df <- data.frame(a = 1:3, b = 4:6)
+> ban_tb <- tibble(a = 1:3, b = 4:6)
+> ban_df[, "a"]
+```
+
+```
+[1] 1 2 3
+```
+
+```r
+> ban_tb[, "a"]
+```
+
+```
+# A tibble: 3 x 1
+      a
+  <int>
+1     1
+2     2
+3     3
+```
+
+```r
+> ban_df$a
+```
+
+```
+[1] 1 2 3
+```
+
+```r
+> ban_tb$b
+```
+
+```
+[1] 4 5 6
+```
+
+```r
+> ban_df[["a"]]
+```
+
+```
+[1] 1 2 3
+```
+
+```r
+> ban_tb[["a"]]
+```
+
+```
+[1] 1 2 3
+```
+
+#### Susbstituição, reposicionamento, eliminação e combinação
+
+Como nos data frame
+
+#### Coerção
+
+Mesmo princípio da coerção de e para data frames. Na coerção para tibbles deve se usar a função `as_tibble`.
+
+
+```r
+> as_tibble(ban_df)
+```
+
+```
+# A tibble: 3 x 2
+      a     b
+  <int> <int>
+1     1     4
+2     2     5
+3     3     6
+```
+
 ### Lista
 
 A lista é a estrutura mais flexível quanto à heterogeneidade do seu conteúdo, pois seus próprios elementos são listas que podem conter objetos com qualquer uma das estruturas vistas, inclusive outras listas.
@@ -1928,11 +2467,13 @@ grupo sim nao desc
     c   0   1    0
 
 [[3]]
-  cidade  pop casos vigilancia
-1      a 1500   133        nao
-2      b    z    37        sim
-3      c 2000    83        sim
-4      d 4500   503        nao
+# A tibble: 4 x 4
+  cidade populacao casos vigilancia
+  <chr>      <dbl> <dbl> <chr>     
+1 a           1500   133 nao       
+2 b           3300    37 sim       
+3 c           2000    76 sim       
+4 d           4500   503 nao       
 ```
 
 #### Atributos e estrutura
@@ -1959,38 +2500,40 @@ List of 3
   ..- attr(*, "dimnames")=List of 2
   .. ..$ grupo   : chr [1:3] "a" "b" "c"
   .. ..$ vacinado: chr [1:3] "sim" "nao" "desc"
- $ :'data.frame':	4 obs. of  4 variables:
-  ..$ cidade    : Factor w/ 4 levels "a","b","c","d": 1 2 3 4
-  ..$ pop       : chr [1:4] "1500" "z" "2000" "4500"
-  ..$ casos     : num [1:4] 133 37 83 503
-  ..$ vigilancia: Factor w/ 2 levels "nao","sim": 1 2 2 1
+ $ :Classes 'tbl_df', 'tbl' and 'data.frame':	4 obs. of  4 variables:
+  ..$ cidade    : chr [1:4] "a" "b" "c" "d"
+  ..$ populacao : num [1:4] 1500 3300 2000 4500
+  ..$ casos     : num [1:4] 133 37 76 503
+  ..$ vigilancia: chr [1:4] "nao" "sim" "sim" "nao"
 ```
 
-No exemplo acima, cada um dos três cifrões à esquerda está associado, respectivamente, a um dos elementos de `lista`. Aproveitando a semelhança entre gavetas e os elementos de uma lista, designemos os elementos a três nomes.
+No exemplo acima, cada um dos três cifrões à esquerda está associado, respectivamente, a um dos elementos de `lista`. Aproveitando a semelhança entre caixas e os elementos de uma lista, designemos os elementos a três nomes.
 
 
 ```r
-> names(lista) <- c('gaveta1', 'gaveta2', 'gaveta3')
+> names(lista) <- c('caixa1', 'caixa2', 'caixa3')
 > lista
 ```
 
 ```
-$gaveta1
+$caixa1
 [1] 1 2 3
 
-$gaveta2
+$caixa2
      vacinado
 grupo sim nao desc
     a   8  13   10
     b   6   9    6
     c   0   1    0
 
-$gaveta3
-  cidade  pop casos vigilancia
-1      a 1500   133        nao
-2      b    z    37        sim
-3      c 2000    83        sim
-4      d 4500   503        nao
+$caixa3
+# A tibble: 4 x 4
+  cidade populacao casos vigilancia
+  <chr>      <dbl> <dbl> <chr>     
+1 a           1500   133 nao       
+2 b           3300    37 sim       
+3 c           2000    76 sim       
+4 d           4500   503 nao       
 ```
 
 ```r
@@ -1999,16 +2542,16 @@ $gaveta3
 
 ```
 List of 3
- $ gaveta1: int [1:3] 1 2 3
- $ gaveta2: num [1:3, 1:3] 8 6 0 13 9 1 10 6 0
+ $ caixa1: int [1:3] 1 2 3
+ $ caixa2: num [1:3, 1:3] 8 6 0 13 9 1 10 6 0
   ..- attr(*, "dimnames")=List of 2
   .. ..$ grupo   : chr [1:3] "a" "b" "c"
   .. ..$ vacinado: chr [1:3] "sim" "nao" "desc"
- $ gaveta3:'data.frame':	4 obs. of  4 variables:
-  ..$ cidade    : Factor w/ 4 levels "a","b","c","d": 1 2 3 4
-  ..$ pop       : chr [1:4] "1500" "z" "2000" "4500"
-  ..$ casos     : num [1:4] 133 37 83 503
-  ..$ vigilancia: Factor w/ 2 levels "nao","sim": 1 2 2 1
+ $ caixa3:Classes 'tbl_df', 'tbl' and 'data.frame':	4 obs. of  4 variables:
+  ..$ cidade    : chr [1:4] "a" "b" "c" "d"
+  ..$ populacao : num [1:4] 1500 3300 2000 4500
+  ..$ casos     : num [1:4] 133 37 76 503
+  ..$ vigilancia: chr [1:4] "nao" "sim" "sim" "nao"
 ```
 
 ```r
@@ -2017,7 +2560,7 @@ List of 3
 
 ```
 $names
-[1] "gaveta1" "gaveta2" "gaveta3"
+[1] "caixa1" "caixa2" "caixa3"
 ```
 
 O comprimento de uma lista é dado pelo número de elementos contidos.
@@ -2037,26 +2580,26 @@ Criemos outra lista mais complexa para ver alguns exemplos.
 
 
 ```r
-> (gaveta <- list('g1',
-+                 gaveta2 = 'g2',
-+                 gaveta3 = list('g3a', 'g3b', gaveta3c = 'g3c')))
+> (caixa <- list('g1',
++                 caixa2 = 'g2',
++                 caixa3 = list('g3a', 'g3b', caixa3c = 'g3c')))
 ```
 
 ```
 [[1]]
 [1] "g1"
 
-$gaveta2
+$caixa2
 [1] "g2"
 
-$gaveta3
-$gaveta3[[1]]
+$caixa3
+$caixa3[[1]]
 [1] "g3a"
 
-$gaveta3[[2]]
+$caixa3[[2]]
 [1] "g3b"
 
-$gaveta3$gaveta3c
+$caixa3$caixa3c
 [1] "g3c"
 ```
 
@@ -2064,7 +2607,7 @@ A indexação com corchetes simples retorna cada um dos elementos selecionados d
 
 
 ```r
-> gaveta[1]
+> caixa[1]
 ```
 
 ```
@@ -2073,7 +2616,7 @@ A indexação com corchetes simples retorna cada um dos elementos selecionados d
 ```
 
 ```r
-> gaveta[[1]]
+> caixa[[1]]
 ```
 
 ```
@@ -2081,16 +2624,16 @@ A indexação com corchetes simples retorna cada um dos elementos selecionados d
 ```
 
 ```r
-> gaveta[2]
+> caixa[2]
 ```
 
 ```
-$gaveta2
+$caixa2
 [1] "g2"
 ```
 
 ```r
-> gaveta[[2]]
+> caixa[[2]]
 ```
 
 ```
@@ -2098,23 +2641,23 @@ $gaveta2
 ```
 
 ```r
-> gaveta[3]
+> caixa[3]
 ```
 
 ```
-$gaveta3
-$gaveta3[[1]]
+$caixa3
+$caixa3[[1]]
 [1] "g3a"
 
-$gaveta3[[2]]
+$caixa3[[2]]
 [1] "g3b"
 
-$gaveta3$gaveta3c
+$caixa3$caixa3c
 [1] "g3c"
 ```
 
 ```r
-> gaveta[[3]]
+> caixa[[3]]
 ```
 
 ```
@@ -2124,12 +2667,12 @@ $gaveta3$gaveta3c
 [[2]]
 [1] "g3b"
 
-$gaveta3c
+$caixa3c
 [1] "g3c"
 ```
 
 ```r
-> gaveta[['gaveta']]
+> caixa[['caixa']]
 ```
 
 ```
@@ -2137,7 +2680,7 @@ NULL
 ```
 
 ```r
-> gaveta$gaveta3
+> caixa$caixa3
 ```
 
 ```
@@ -2147,35 +2690,35 @@ NULL
 [[2]]
 [1] "g3b"
 
-$gaveta3c
+$caixa3c
 [1] "g3c"
 ```
 
 ```r
-> gaveta[1:2]
+> caixa[1:2]
 ```
 
 ```
 [[1]]
 [1] "g1"
 
-$gaveta2
+$caixa2
 [1] "g2"
 ```
 
 ```r
-> gaveta[[1:2]]
+> caixa[[1:2]]
 ```
 
 ```
-Error in gaveta[[1:2]]: subscript out of bounds
+Error in caixa[[1:2]]: subscript out of bounds
 ```
 
 A indexação não está restrita ao primeiro nível hierárquico da estrutura
 
 
 ```r
-> gaveta$gaveta3[[2]]
+> caixa$caixa3[[2]]
 ```
 
 ```
@@ -2183,7 +2726,7 @@ A indexação não está restrita ao primeiro nível hierárquico da estrutura
 ```
 
 ```r
-> gaveta$gaveta3$gaveta3c
+> caixa$caixa3$caixa3c
 ```
 
 ```
@@ -2194,25 +2737,29 @@ e os objetos contidos também podem ser indexados
 
 
 ```r
-> lista$gaveta3
+> lista$caixa3
 ```
 
 ```
-  cidade  pop casos vigilancia
-1      a 1500   133        nao
-2      b    z    37        sim
-3      c 2000    83        sim
-4      d 4500   503        nao
+# A tibble: 4 x 4
+  cidade populacao casos vigilancia
+  <chr>      <dbl> <dbl> <chr>     
+1 a           1500   133 nao       
+2 b           3300    37 sim       
+3 c           2000    76 sim       
+4 d           4500   503 nao       
 ```
 
 ```r
-> lista$gaveta3[1:2, 2:4]
+> lista$caixa3[1:2, 2:4]
 ```
 
 ```
-   pop casos vigilancia
-1 1500   133        nao
-2    z    37        sim
+# A tibble: 2 x 3
+  populacao casos vigilancia
+      <dbl> <dbl> <chr>     
+1      1500   133 nao       
+2      3300    37 sim       
 ```
 
 Tendo visto a forma de indexar listas, podemos entender melhor o resultado da função `str` aplicada ao objeto `vacinados`.
@@ -2260,25 +2807,25 @@ Os elementos indexados podem ser substituidos por qualquer valor.
 
 
 ```r
-> gaveta[1:2] <- c(100, 200)
-> gaveta
+> caixa[1:2] <- c(100, 200)
+> caixa
 ```
 
 ```
 [[1]]
 [1] 100
 
-$gaveta2
+$caixa2
 [1] 200
 
-$gaveta3
-$gaveta3[[1]]
+$caixa3
+$caixa3[[1]]
 [1] "g3a"
 
-$gaveta3[[2]]
+$caixa3[[2]]
 [1] "g3b"
 
-$gaveta3$gaveta3c
+$caixa3$caixa3c
 [1] "g3c"
 ```
 
@@ -2286,25 +2833,25 @@ $gaveta3$gaveta3c
 
 
 ```r
-> gaveta[c(3, 1, 2)]
+> caixa[c(3, 1, 2)]
 ```
 
 ```
-$gaveta3
-$gaveta3[[1]]
+$caixa3
+$caixa3[[1]]
 [1] "g3a"
 
-$gaveta3[[2]]
+$caixa3[[2]]
 [1] "g3b"
 
-$gaveta3$gaveta3c
+$caixa3$caixa3c
 [1] "g3c"
 
 
 [[2]]
 [1] 100
 
-$gaveta2
+$caixa2
 [1] 200
 ```
 
@@ -2312,14 +2859,14 @@ $gaveta2
 
 
 ```r
-> gaveta[-3]
+> caixa[-3]
 ```
 
 ```
 [[1]]
 [1] 100
 
-$gaveta2
+$caixa2
 [1] 200
 ```
 
@@ -2459,18 +3006,16 @@ Comtudo, podemos coercionar um data frame para a estrutura geral das listas.
 
 ```
 $cidade
-[1] a b c d
-Levels: a b c d
+[1] "a" "b" "c" "d"
 
-$pop
-[1] "1500" "z"    "2000" "4500"
+$populacao
+[1] 1500 3300 2000 4500
 
 $casos
-[1] 133  37  83 503
+[1] 133  37  76 503
 
 $vigilancia
-[1] nao sim sim nao
-Levels: nao sim
+[1] "nao" "sim" "sim" "nao"
 ```
 
 Se a estrutura o permite, uma lista pode ser coercionada para data frame.
@@ -2647,7 +3192,7 @@ Levels: c < b < a
 
 #### Atributos e estrutura
 
-O atributo `level` mostra as diferentes categorias. O argumento `class` especifica a classe do objeto e se o mesmo é ordenado.
+O atributo `level` mostra as diferentes categorias. O atributo `class` especifica a classe do objeto e se o mesmo é ordenado.
 
 
 ```r
@@ -2804,7 +3349,7 @@ Levels: a b c d
 [1] "a" "b" "c" "d"
 ```
 
-e o reposicionamento dos níveis não afeta nem a posição dos elementos, nem a ordem dos níveis.
+e o reposicionamento dos níveis não afeta nem a posição dos elementos.
 
 
 ```r
@@ -2989,7 +3534,7 @@ As funções são objetos que podemos usar e criar para automatizar tarefas repe
 ```
 
 ```
-[1] "Fri Oct 28 17:53:04 2016"
+[1] "Thu Nov 22 18:53:10 2018"
 ```
 
 Nas funções que têm argumentos, os mesmos têm nomes, posições específicas e opcionalmente, valores predefinidos. Tomando a função `seq` como exemplo, os argumentos `from` e `to` que definem o começo e fim da sequência, tem "1" como valor padrão. O valor padrão de `by` é equivalente a "1". Os outros argumentos (excetuando `...` que será explorado em breve) não são usados por padrão, pois seu valor padrão é `NULL` (nulo). Se usarmos a função sem argumentos, serão usados os valores padrão.

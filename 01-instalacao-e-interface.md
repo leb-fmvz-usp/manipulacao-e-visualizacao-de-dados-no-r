@@ -2,6 +2,8 @@
 
 ## Instalação e interface 
 
+### Introdução
+
 Uma linguagem de programação é um método padronizado para comunicar instruções para um computador e o [R](https://www.r-project.org/about.html) é uma linguagem de programação especializada na comunicação de instruções para a manipulação, cálculo e visualização de dados. Formalmente o R é definido como uma linguagem e ambiente de programação estatística e produção de gráficos. Essa definição inclui o termo *ambiente* para indicar que o R é um sistema flexível, coerente e planejado; não apenas um conjunto de ferramentas estatísticas. Por outro lado, o R é um software gratuito, de código aberto e extensível. Isso quer dizer que não há que pagar para usá-lo (gratuito), a implementação das suas funções está disponível (código aberto), e os usuários podem acrescentar novas funções (extensível). A expressão [código aberto](https://pt.wikipedia.org/wiki/Software_de_c%C3%B3digo_aberto) indica que as instruções (código fonte) executadas por cada função são disponibilizadas sob uma licença de código aberto na qual o direito autoral fornece o direito de estudar, modificar e distribuir essas instruções de graça para qualquer um e para qualquer finalidade.
 
 ### Instalação
@@ -60,9 +62,12 @@ Um tipo de operação importante é a desingação (assign). No exemplo a seguir
 
 ![](interface/rstudio9.png)  
 
-Os dois comandos anteriores criaram dois objetos e todos os objetos são listados no painel *Environment*. Para imprimir o conteúdo de um objeto basta executar o nome. Vejamos esse comportamento com os objetos `x` e `y`, mas antes disso, limpemos a consola com o atalho *Ctrl+L*.  
+Os dois comandos anteriores criaram dois objetos e todos os objetos são listados no painel *Environment*. Para imprimir o conteúdo de um objeto basta executar o nome. Vejamos esse comportamento com os objetos `x` e `y`, mas antes disso, limpemos a consola com o atalho \textit{Ctrl+L}.  
 
 ![](interface/rstudio10.png)  
+
+Daqui para frente, o conteúdo de quadros cinza como o que está abaixo são os comandos executados, e os resultados da execução aparecerão em seguida precedidos por `##` ou serão gráficos.  
+
 
 ```r
 > x <- 1:10
@@ -174,7 +179,7 @@ Usando o pacote *maps* como exemplo, podemos ver que a tentativa de usar `map` -
 ```
 
 ```
-Error in eval(expr, envir, enclos): could not find function "map"
+Error in map("world"): could not find function "map"
 ```
 
 Para instalar o pacote podemos executar o comando `install.packages('maps')` ou ir no painel *Packages*, clicar no ícone *install*, digitar *maps* na janela aberta, ativar a opção *Install dependencies*, e clicar *Install*.  
@@ -192,21 +197,10 @@ Após a instalação, o pacote deve ser carregado com a função `library`, ante
 
 
 
-```r
+```r01
 > library(maps)
++ map('world')
 ```
-
-```
-
- # maps v3.1: updated 'world': all lakes moved to separate new #
- # 'lakes' database. Type '?world' or 'news(package="maps")'.  #
-```
-
-```r
-> map('world')
-```
-
-![](figures/01-01-1.png)
 
 
 

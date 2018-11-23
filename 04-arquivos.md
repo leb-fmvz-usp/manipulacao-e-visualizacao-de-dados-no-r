@@ -82,18 +82,72 @@ Tanto, `read.csv` como `read.csv2` são versões específicas para arquivos CSV,
 5         5         1           nao
 ```
 
-A vantagem de `read.table` é que além de importar arquivos CSV, importa outras extensões como TXT.  
+A vantagem de `read.table` é que além de importar arquivos CSV, importa arquivos com outras extensões (ex. TXT) e outros separadores (ex. Tab).
 
-#### Interface do RStudio
+Com qualquer das funções anteriores as colunas de caracters são transformadas em fatores por padrão.
 
-O RStudio tem uma interface para importar arquivos. No painel *Envorinment*, janela *Import Daset*, a opção *From Local File* abre a seguinte interface que permite definir várias opções, visualizar o arquivo de entrada e visualizar a forma em o arquivo será importado.  
 
-![](interface/rstudio40.png)  
-<br>
+```
+ Factor w/ 2 levels "nao","sim": 2 2 1 2 1
+```
+
+Para evitar a coerção para fatores devemos usar o argumento `stringsAsFactors`.
+
+
+```r
+> domicilios <- read.csv('domicilios.csv', stringsAsFactors = FALSE)
+> str(domicilios$caes_ou_gatos)
+```
+
+```
+ chr [1:5] "sim" "sim" "nao" "sim" "nao"
+```
+
+#### Valores faltantes (missing values)
+
+Os valores faltantes são representados no R pelo objeto `NA` e por padrão é atribuiído às células em branco das colunas numéricas. As células com o valor "NA" também são importadas como NAs. Se criarmos um arquivo CSV com o seguinte conteúdo,
+
+| domicilio | moradores | caes\_ou\_gatos |
+|---|---|---|
+| 1 | 3 | sim |
+| 2 |   | sim |
+|   | x | nao |
+| 4 | 2 | sim |
+| 5 | 1 | nao |
+
+o terceiro valor da coluna `domicilio` será um `NA`, a coluna `moradores` será importada como fator (ou caracter com `stringsAsFactors = FALSE`) devido ao "x" da terceira linha e o segundo valor dessa coluna será "".
+
+
+```r
+> dom3 <- read.csv('domicilios3.csv')
+> str(dom3)
+```
+
+```
+'data.frame':	5 obs. of  3 variables:
+ $ domicilio    : int  1 2 NA 4 5
+ $ moradores    : Factor w/ 5 levels "","1","2","3",..: 4 1 5 3 2
+ $ caes_ou_gatos: Factor w/ 2 levels "nao","sim": 2 2 1 2 1
+```
+
+Se na planilha anterior o "x" e a célula em branco na coluna `moradores` representam valores faltantes, podemos importar o banco usando o argumento `na`.
+
+
+```r
+> dom3 <- read.csv('domicilios3.csv', na = c("x", ""))
+> str(dom3)
+```
+
+```
+'data.frame':	5 obs. of  3 variables:
+ $ domicilio    : int  1 2 NA 4 5
+ $ moradores    : int  3 NA NA 2 1
+ $ caes_ou_gatos: Factor w/ 2 levels "nao","sim": 2 2 1 2 1
+```
 
 #### Caracteres especiais
 
-Se criamos um arquivo *dom* semelhante ao arquivo *domicilios*, mas com acentos e espaços  
+Se criarmos um arquivo *dom* com acentos e espaços, 
 
 | domicílio | moradores | cães ou gatos |
 |---|---|---|
@@ -147,6 +201,132 @@ Embora seja possível especificar a codificação *latin1* para reconhecer carac
 5         5         1           não
 ```
 
+#### Pacote readr
+
+O pacote `readr` tem funções para importar arquivos que são mais rapids e consistentes. A função a ser usada depende do separador: `read_csv` para vírgula, `read_csv2`para ponto e vŕigula, `read_tsb`para Tab, `read_delim` para especificar o delimitador, entre outras. O `readr` os dados para um tibble e gera uma mensagem de aviso indicando o tipo de cada coluna.
+
+
+```r
+> library(readr)
+> (domicilios <- read_csv('domicilios.csv'))
+```
+
+```
+Parsed with column specification:
+cols(
+  domicilio = col_integer(),
+  moradores = col_integer(),
+  caes_ou_gatos = col_character()
+)
+```
+
+```
+# A tibble: 5 x 3
+  domicilio moradores caes_ou_gatos
+      <int>     <int> <chr>        
+1         1         3 sim          
+2         2         2 sim          
+3         3         4 nao          
+4         4         2 sim          
+5         5         1 nao          
+```
+
+
+```r
+> read_csv2('domicilios2.csv')
+```
+
+```
+Using ',' as decimal and '.' as grouping mark. Use read_delim() for more control.
+```
+
+```
+Parsed with column specification:
+cols(
+  domicilio = col_integer(),
+  moradores = col_integer(),
+  caes_ou_gatos = col_character()
+)
+```
+
+```
+# A tibble: 5 x 3
+  domicilio moradores caes_ou_gatos
+      <int>     <int> <chr>        
+1         1         3 sim          
+2         2         2 sim          
+3         3         4 nao          
+4         4         2 sim          
+5         5         1 nao          
+```
+
+A especificação da codificação se faz com o argumento `encoding` da função `locale` que por sua vez é usada para definir o argumento `locale`.
+
+
+```r
+> read_csv('dom.csv', locale = locale(encoding = "latin1"))
+```
+
+```
+Parsed with column specification:
+cols(
+  domicílio = col_integer(),
+  moradores = col_integer(),
+  `cães ou gatos` = col_character()
+)
+```
+
+```
+# A tibble: 5 x 3
+  domicílio moradores `cães ou gatos`
+      <int>     <int> <chr>          
+1         1         3 sim            
+2         2         2 sim            
+3         3         4 não            
+4         4         2 sim            
+5         5         1 não            
+```
+
+Com as funções do `readr` as células em branco também são importadas como NAs, mesmo em colunas de caracteres. Se for necessário interepretar como NAs outros valores, essas funções também têm o argumento `na`.
+
+
+```r
+> read_csv('domicilios3.csv', na = "x")
+```
+
+```
+Parsed with column specification:
+cols(
+  domicilio = col_integer(),
+  moradores = col_integer(),
+  caes_ou_gatos = col_character()
+)
+```
+
+```
+# A tibble: 5 x 3
+  domicilio moradores caes_ou_gatos
+      <int>     <int> <chr>        
+1         1         3 sim          
+2         2        NA sim          
+3        NA        NA nao          
+4         4         2 sim          
+5         5         1 nao          
+```
+
+
+#### Interface do RStudio
+
+O RStudio tem uma interface para importar arquivos. No painel *Envorinment*, janela *Import Daset*, as opções *From Text (base)* ou *From Text (readr)* abrem uma interface de importação que permitem definir várias opções, visualizar o arquivo de entrada e visualizar a forma em o arquivo será importado. Caso o formato de saída não seja o desejado, deverão se alterar as diferentes opções até conseguir o formato adequado. A opção *From Text (base)* primeiro abre uma interface para escolher o arquivo e uma vez feita a escolha, abre a interface de importação.
+
+![](interface/rstudio40.png)  
+<br>
+
+A opção *From Text (readr)* abre uma única interface de importação.
+
+![](interface/rstudio41.png)  
+<br>
+
 ### Exportação
 
 Um data frame pode ser exportado para um arquivo CSV com a função `write.csv`, especificando o nome do data frame e o nome do arquivo a ser criado. Por padrão, a função `write.csv` acrescenta uma coluna que numera as linhas, mas isso pode ser prevenido com o argumento `row.names`.
@@ -157,9 +337,16 @@ Um data frame pode ser exportado para um arquivo CSV com a função `write.csv`,
 
 Assim como na importação, `write.csv` e `write.csv2` são versões simplificadas de `write.table`.  
 
+No pacote `readr` também a funções de exportação (`write_csv`, `write_csv2`, entre outras) e nẽnhuma coluna é acrescentada por padrão.
+
+
+```r
+> write_csv(domicilios, 'domicilios2.csv')
+```
+
 ### Outras extensões
 
-Arquivos com extensão de outros programas podem ser importados com funções dos pacotes *Hmisc* e *foreign*, entre outros. Por exemplo, se o arquivo domicílios tivesse a extensão do software *STATA* ou *SPSS*, a importação seria da seguinte maneira.
+Arquivos com extensão de outros programas podem ser importados com funções dos pacotes *Hmisc*, *foreign*, *haven*, e *readxl* entre outros. Por exemplo, se o arquivo domicílios tivesse a extensão do software *STATA* ou *SPSS*, a importação seria da seguinte maneira.
 
 
 ```r

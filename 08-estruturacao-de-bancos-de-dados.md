@@ -11,6 +11,8 @@ O pacote `tidyr` possui funções específicas para mudar a estrutura dos bancos
 
 Por outro lado, as funções do pacote `broom` arrumam a estrutura dos resultados de funções, retornados em estruturas complexas (por exemplo listas aninhadas) de difícil manipulação. Veremos a funcionalidade do `broom` no contexto dos modelos de regressão, mas antes disso exploraremos o *encadeamento* de operações com `%>%`.
 
+O pacote `tidyverse` é um pacote que carrega um conjunto de pacotes frequentemente usados na manipulação e visualização de dados. Dos pacotes vistos até o momento, o `tidyverse` carrega o `readr`, o `dplyr`, o `ggplot2` e o `tidyr`. Daqui para frente usaremos o `tidyverse` para usar o seus pacotes.
+
 ### Os nomes de colunas são valores de uma variável, não variáveis em si
 
 Um conjunto de dados com 20 observações e 3 variáveis (setor censitário, tipo de região: rural ou urbano, e total de vacinados) pode estar estruturado da seguinte maneira:
@@ -41,6 +43,22 @@ Se os nomes das colunas `rural` e `urbano` são valores da variável *tipo de re
 
 
 ```
+── Attaching packages ───────────────────────────────────────── tidyverse 1.2.1 ──
+```
+
+```
+✔ tibble  1.4.2     ✔ purrr   0.2.5
+✔ tidyr   0.8.2     ✔ stringr 1.3.1
+✔ tibble  1.4.2     ✔ forcats 0.3.0
+```
+
+```
+── Conflicts ──────────────────────────────────────────── tidyverse_conflicts() ──
+✖ dplyr::filter() masks stats::filter()
+✖ dplyr::lag()    masks stats::lag()
+```
+
+```
    setor   tipo vacinados
 1      a  rural        36
 2      b  rural        29
@@ -68,7 +86,7 @@ Com a função `gather` do `tidyr` podemos transformar a primeira estrutura na s
 
 
 ```r
-> library(tidyr)
+> library(tidyverse)
 > gather(data = caes_vacinados, key = tipo, value = vacinados, rural, urbano)
 ```
 

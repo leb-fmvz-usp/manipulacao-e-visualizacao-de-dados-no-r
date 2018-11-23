@@ -29,7 +29,7 @@ set.seed(3)
 Reparem que com as funções do `dplyr` os nomes das colunas não estão contidos em aspas.
 
 ```{r, message=FALSE}
-library(dplyr)
+library(tidyverse)
 filter(domicilios, caes > 1)
 ```
 

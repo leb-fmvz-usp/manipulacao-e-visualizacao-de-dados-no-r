@@ -16,6 +16,8 @@ O pacote `tidyr` possui funções específicas para mudar a estrutura dos bancos
 
 Por outro lado, as funções do pacote `broom` arrumam a estrutura dos resultados de funções, retornados em estruturas complexas (por exemplo listas aninhadas) de difícil manipulação. Veremos a funcionalidade do `broom` no contexto dos modelos de regressão, mas antes disso exploraremos o *encadeamento* de operações com `%>%`.
 
+O pacote `tidyverse` é um pacote que carrega um conjunto de pacotes frequentemente usados na manipulação e visualização de dados. Dos pacotes vistos até o momento, o `tidyverse` carrega o `readr`, o `dplyr`, o `ggplot2` e o `tidyr`. Daqui para frente usaremos o `tidyverse` para usar o seus pacotes.
+
 ### Os nomes de colunas são valores de uma variável, não variáveis em si
 
 Um conjunto de dados com 20 observações e 3 variáveis (setor censitário, tipo de região: rural ou urbano, e total de vacinados) pode estar estruturado da seguinte maneira:
@@ -30,7 +32,7 @@ set.seed(100)
 Se os nomes das colunas `rural` e `urbano` são valores da variável *tipo de região*, a estrutura arrumada deve ter 20 linhas e 3 colunas.
 
 ```{r, echo=FALSE}
-library(tidyr)
+library(tidyverse)
 set.seed(100)
 caes_vacinados <- data.frame(setor = letters[1:10],
                              rural = rpois(10, 40),
@@ -41,7 +43,7 @@ gather(caes_vacinados, tipo, vacinados, -setor)
 Com a função `gather` do `tidyr` podemos transformar a primeira estrutura na segunda especificando o banco, o nome de duas colunas *chave* e *valor*, e as colunas que não são variáveis.
 
 ```{r}
-library(tidyr)
+library(tidyverse)
 gather(data = caes_vacinados, key = tipo, value = vacinados, rural, urbano)
 ```
 

@@ -3,9 +3,9 @@
 <br>
 Contato: <baquero@usp.br>
 <br>
-Última revisão: 2 de abril de 2017  
-Em caso de não estar lendo a versão online, está versão pode estar desatualizada.  
-Clique [aqui](https://www.gitbook.com/book/leb-fmvz-usp/manipulacao-e-visualizacao-de-dados-no-r/details) para acessar a página do livro.
+Última revisão: 4 de março de 2018  
+Em caso de não estar lendo a versão online e ter baixado o livro faz vários dias, está versão pode estar desatualizada.  
+Clique [aqui](https://www.gitbook.com/book/leb-fmvz-usp/manipulacao-e-visualizacao-de-dados-no-r/details) para acessar a página do livro e lê-lo online ou baixá-lo de novo.
 <br><br><br><br>
 
 A preparação de dados facilmente compreende 80% do processo de análise de dados (Dasu e Johnson, 2003) e a exploração de dados é um mecanismo que facilita a detecção de erros e a verificação de pressupostos para aplicar métodos de análise. Por outro lado, o domínio de técnicas de manipulação e visualização de dados traz ganhos na qualidade, produtividade e reproduzibilidade das análises de dados.  
