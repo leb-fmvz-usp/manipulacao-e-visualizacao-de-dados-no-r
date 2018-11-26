@@ -23,7 +23,7 @@ typeof(TRUE)
 typeof(FALSE)
 ```
 
-Os objetos além de serem de um determinado tipo, possuem um modo, uma classe, e uma estrutura especifica determinada pelo número de dimensões, e pela homegeneidade do conteúdo em relação ao tipo dos seus elementos.
+Os objetos além de serem de um determinado tipo, possuem um modo, uma classe, e uma estrutura determinada pelo número de dimensões e a homegeneidade. Se um objeto tem mais de um elemento e todos são do mesmo tipo, a estrutura é homogênea.
 
 O modo também se refere ao armazenamento dos dados e é praticamente equivalente ao tipo. A função `mode` mostra o modo dos objetos.
 

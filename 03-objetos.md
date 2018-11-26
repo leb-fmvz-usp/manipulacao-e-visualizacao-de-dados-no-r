@@ -65,7 +65,7 @@ No terceiro exemplo a seguir, o objeto é tipo *double*, apesar de não ter uma 
 [1] "logical"
 ```
 
-Os objetos além de serem de um determinado tipo, possuem um modo, uma classe, e uma estrutura especifica determinada pelo número de dimensões, e pela homegeneidade do conteúdo em relação ao tipo dos seus elementos.
+Os objetos além de serem de um determinado tipo, possuem um modo, uma classe, e uma estrutura determinada pelo número de dimensões e a homegeneidade. Se um objeto tem mais de um elemento e todos são do mesmo tipo, a estrutura é homogênea.
 
 O modo também se refere ao armazenamento dos dados e é praticamente equivalente ao tipo. A função `mode` mostra o modo dos objetos.
 
@@ -3534,7 +3534,7 @@ As funções são objetos que podemos usar e criar para automatizar tarefas repe
 ```
 
 ```
-[1] "Thu Nov 22 18:53:10 2018"
+[1] "Mon Nov 26 18:13:10 2018"
 ```
 
 Nas funções que têm argumentos, os mesmos têm nomes, posições específicas e opcionalmente, valores predefinidos. Tomando a função `seq` como exemplo, os argumentos `from` e `to` que definem o começo e fim da sequência, tem "1" como valor padrão. O valor padrão de `by` é equivalente a "1". Os outros argumentos (excetuando `...` que será explorado em breve) não são usados por padrão, pois seu valor padrão é `NULL` (nulo). Se usarmos a função sem argumentos, serão usados os valores padrão.
