@@ -53,7 +53,7 @@ Com as estruturas anteriores é possível aplicar as seguintes operações:
 | Operação | Descrição |
 |---|---|
 | Criação | Do objeto em si |
-| Inspecção | Exploração de atributos e da estrutura em si |
+| Inspecção | Exploração dos atributos e da estrutura |
 | Indexação | Seleção de um subconjunto de elementos |
 | Substituição | Redefinição de um subconjunto de elementos |
 | Reposicionamento | Alteração da ordem dos elementos |

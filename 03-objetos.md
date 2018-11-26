@@ -137,7 +137,7 @@ Com as estruturas anteriores é possível aplicar as seguintes operações:
 | Operação | Descrição |
 |---|---|
 | Criação | Do objeto em si |
-| Inspecção | Exploração de atributos e da estrutura em si |
+| Inspecção | Exploração dos atributos e da estrutura |
 | Indexação | Seleção de um subconjunto de elementos |
 | Substituição | Redefinição de um subconjunto de elementos |
 | Reposicionamento | Alteração da ordem dos elementos |
@@ -3534,7 +3534,7 @@ As funções são objetos que podemos usar e criar para automatizar tarefas repe
 ```
 
 ```
-[1] "Mon Nov 26 18:13:10 2018"
+[1] "Mon Nov 26 18:24:01 2018"
 ```
 
 Nas funções que têm argumentos, os mesmos têm nomes, posições específicas e opcionalmente, valores predefinidos. Tomando a função `seq` como exemplo, os argumentos `from` e `to` que definem o começo e fim da sequência, tem "1" como valor padrão. O valor padrão de `by` é equivalente a "1". Os outros argumentos (excetuando `...` que será explorado em breve) não são usados por padrão, pois seu valor padrão é `NULL` (nulo). Se usarmos a função sem argumentos, serão usados os valores padrão.
